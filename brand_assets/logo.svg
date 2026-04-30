@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Tapu Rota">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D98A"/>
+      <stop offset="35%" stop-color="#D4AF6A"/>
+      <stop offset="65%" stop-color="#B8924A"/>
+      <stop offset="100%" stop-color="#E8C77A"/>
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5D98A"/>
+      <stop offset="50%" stop-color="#D4AF6A"/>
+      <stop offset="100%" stop-color="#9A7A4A"/>
+    </linearGradient>
+    <radialGradient id="darkGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1A1612"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <path id="circle-text" d="M 200,200 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0"/>
+  </defs>
+
+  <!-- Scalloped outer ring -->
+  <g transform="translate(200,200)">
+    <path d="M 0,-185 L 8,-178 L 18,-180 L 24,-172 L 33,-172 L 38,-164 L 47,-162 L 51,-153 L 60,-150 L 63,-141 L 71,-136 L 73,-127 L 80,-121 L 81,-112 L 87,-105 L 87,-96 L 92,-88 L 91,-79 L 95,-71 L 93,-62 L 96,-53 L 93,-44 L 95,-35 L 90,-27 L 91,-18 L 85,-11 L 85,-2 L 78,4 L 77,13 L 69,18 L 67,27 L 58,30 L 55,39 L 46,41 L 41,49 L 32,49 L 26,57 L 17,55 L 9,62 L 0,59 L -9,62 L -17,55 L -26,57 L -32,49 L -41,49 L -46,41 L -55,39 L -58,30 L -67,27 L -69,18 L -77,13 L -78,4 L -85,-2 L -85,-11 L -91,-18 L -90,-27 L -95,-35 L -93,-44 L -96,-53 L -93,-62 L -95,-71 L -91,-79 L -92,-88 L -87,-96 L -87,-105 L -81,-112 L -80,-121 L -73,-127 L -71,-136 L -63,-141 L -60,-150 L -51,-153 L -47,-162 L -38,-164 L -33,-172 L -24,-172 L -18,-180 L -8,-178 Z"
+      transform="scale(1) rotate(0)"
+      fill="url(#goldGrad)" stroke="#9A7A4A" stroke-width="0.5"/>
+  </g>
+
+  <!-- Inner black circle -->
+  <circle cx="200" cy="200" r="150" fill="url(#darkGrad)"/>
+  <!-- Inner gold ring -->
+  <circle cx="200" cy="200" r="148" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  <circle cx="200" cy="200" r="138" fill="none" stroke="url(#goldGrad)" stroke-width="1"/>
+
+  <!-- House with compass -->
+  <g transform="translate(200,150)">
+    <!-- House outline -->
+    <path d="M -32,-10 L 0,-42 L 32,-10 L 32,30 L -32,30 Z" fill="none" stroke="url(#goldGrad2)" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Roof inner line -->
+    <path d="M -38,-8 L 0,-46 L 38,-8" fill="none" stroke="url(#goldGrad2)" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Compass face -->
+    <circle cx="0" cy="10" r="13" fill="none" stroke="url(#goldGrad2)" stroke-width="2"/>
+    <circle cx="0" cy="10" r="1.5" fill="#D4AF6A"/>
+    <!-- Compass needle -->
+    <path d="M 0,-2 L 4,10 L 0,22 L -4,10 Z" fill="url(#goldGrad2)"/>
+    <path d="M 0,-2 L 4,10 L 0,10 Z" fill="#F5D98A"/>
+    <!-- Tick marks -->
+    <line x1="0" y1="-4" x2="0" y2="-1" stroke="#D4AF6A" stroke-width="1.2"/>
+    <line x1="0" y1="21" x2="0" y2="24" stroke="#D4AF6A" stroke-width="1.2"/>
+    <line x1="-13" y1="10" x2="-10" y2="10" stroke="#D4AF6A" stroke-width="1.2"/>
+    <line x1="10" y1="10" x2="13" y2="10" stroke="#D4AF6A" stroke-width="1.2"/>
+  </g>
+
+  <!-- TAPUROTA wordmark -->
+  <text x="200" y="240" text-anchor="middle"
+    font-family="'Cormorant Garamond', 'Playfair Display', Georgia, serif"
+    font-weight="600" font-size="44" letter-spacing="2"
+    fill="url(#goldGrad2)">TAPUROTA</text>
+
+  <!-- divider -->
+  <line x1="135" y1="258" x2="265" y2="258" stroke="url(#goldGrad)" stroke-width="0.8"/>
+
+  <!-- subtitle -->
+  <text x="200" y="278" text-anchor="middle"
+    font-family="'Manrope', 'DM Sans', sans-serif"
+    font-weight="500" font-size="11" letter-spacing="3.5"
+    fill="#D4AF6A">DOĞRU YATIRIMIN ROTASI</text>
+</svg>
