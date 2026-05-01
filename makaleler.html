@@ -6,16 +6,13 @@
   <title>Yatırım Rehberi — Tapu Rota | Arsa, Tapu, İmar & Değerleme</title>
   <meta name="description" content="Arsa yatırımı, tapu işlemleri, imar durumu ve gayrimenkul değerleme üzerine uzman içerikler. Tapu Rota Yatırım Rehberi." />
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HLZP8N3.jpeg" />
-  <link rel="stylesheet" href="assets/styles.css?v=18" />
+  <link rel="stylesheet" href="assets/styles.css?v=19" />
 </head>
 <body data-page="articles">
   <div id="nav-mount"></div>
 
   <section class="section" style="padding-top: 140px">
     <div class="container">
-
-      <!-- Featured article (dinamik) -->
-      <div id="article-feature-slot"></div>
 
       <!-- Filter bar -->
       <div class="filter-bar">
@@ -58,17 +55,15 @@
   </section>
 
   <div id="footer-mount"></div>
-  <script src="assets/partials.js?v=18"></script>
+  <script src="assets/partials.js?v=19"></script>
   <script type="module">
-    import { loadArticlesInto, loadFeaturedFeature } from '/assets/articles.js?v=18';
+    import { loadArticlesInto } from '/assets/articles.js?v=19';
 
     const url = new URL(location.href);
     const cat = url.searchParams.get('kategori');
 
-    const featured = await loadFeaturedFeature('#article-feature-slot');
     await loadArticlesInto('#article-grid', {
       ...(cat ? { category: cat } : {}),
-      ...(featured ? { skipId: featured.id } : {}),
       empty: 'Henüz yazı eklenmemiş.',
     });
 
