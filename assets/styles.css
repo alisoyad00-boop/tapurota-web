@@ -62,6 +62,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(212,175,106,.15);
+  overflow-x: clip;
 }
 body {
   font-family: var(--font-body);
@@ -543,6 +544,19 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     radial-gradient(ellipse 50% 40% at 10% 90%, rgba(212,175,106,.06), transparent 60%);
   pointer-events: none;
 }
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 220px;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(212,175,106,.45) 50%, transparent 100%) bottom / 100% 1px no-repeat,
+    linear-gradient(180deg, transparent 0%, var(--bg) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
 .hero-inner {
   position: relative;
   z-index: 2;
@@ -585,16 +599,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .hero-visual {
   position: relative;
   aspect-ratio: 4 / 5;
-  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--bg-2);
-  box-shadow: var(--shadow-deep);
+  background: transparent;
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
 }
 .hero-visual::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(10,8,7,.7) 100%),
+  background: linear-gradient(180deg, transparent 40%, rgba(10,8,7,.55) 75%, var(--bg) 100%),
               linear-gradient(120deg, rgba(212,175,106,.08), transparent 40%);
   pointer-events: none;
 }
@@ -1374,37 +1388,13 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   text-align: center;
   overflow: hidden;
 }
+.wa-cta-card .wa-cta-icon { display: none; }
 .wa-cta-card::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0.5;
-}
-.wa-cta-icon {
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 22px;
-  border-radius: 50%;
-  border: 1px solid var(--border-strong);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 30% 30%, rgba(212,175,106,.16), transparent 60%);
-  position: relative;
-}
-.wa-cta-icon::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  opacity: 0.5;
-}
-.wa-cta-icon svg {
-  width: 36px;
-  height: 36px;
-  color: var(--gold);
 }
 .wa-cta-key {
   font-size: 11px;
@@ -1462,8 +1452,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
 @media (max-width: 700px) {
   .wa-cta-card { padding: 32px 24px 28px; }
-  .wa-cta-icon { width: 64px; height: 64px; margin-bottom: 18px; }
-  .wa-cta-icon svg { width: 30px; height: 30px; }
 }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
 .form-field { display: flex; flex-direction: column; gap: 8px; }
