@@ -618,38 +618,39 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   position: absolute;
   bottom: 24px; left: 24px; right: 24px;
   z-index: 2;
-  padding: 24px;
+  padding: 22px 26px;
   border-radius: var(--radius);
-  background: rgba(10, 7, 4, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(232, 199, 122, 0.35);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  background: #FBF6E8;
+  border: 1px solid rgba(168, 122, 46, 0.35);
+  box-shadow: 0 18px 48px rgba(74, 53, 16, 0.45),
+              0 4px 12px rgba(0, 0, 0, 0.25);
 }
 .hero-visual-overlay .label {
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #F5D98A;
+  color: var(--gold);
   margin-bottom: 10px;
   display: block;
+  font-weight: 600;
 }
 .hero-visual-overlay .title {
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
-  color: #FFFFFF;
+  color: #1A1208;
   margin-bottom: 8px;
 }
 .hero-visual-overlay .meta {
-  font-size: 13px;
-  color: #F0E8D5;
-  display: flex; gap: 14px;
+  font-size: 13.5px;
+  color: #4A3820;
+  display: flex; gap: 12px;
   align-items: center;
+  font-weight: 500;
 }
-.hero-visual-overlay .meta span[style*="text-ghost"] { color: rgba(245, 217, 138, 0.4) !important; }
-.hero-visual-overlay .meta span[style*="--gold"] { color: #F5D98A !important; font-weight: 600; }
+.hero-visual-overlay .meta span[style*="text-ghost"] { color: rgba(168, 122, 46, 0.5) !important; }
+.hero-visual-overlay .meta span[style*="--gold"] { color: var(--gold) !important; font-weight: 700; }
 
 /* hero floating compass mark */
 .hero-mark {
