@@ -2,27 +2,23 @@
 
 const LOGO_SVG = `
 <svg viewBox="0 0 200 200" class="nav-brand-mark" xmlns="http://www.w3.org/2000/svg" aria-label="TapuRota">
-  <defs>
-    <path id="navScalloped" d="M 100,8
-      L 109,2 L 113,14 L 124,7 L 126,20 L 137,15 L 137,28 L 148,26 L 145,38 L 156,38 L 151,49 L 162,52 L 154,61 L 164,67 L 154,75 L 162,84 L 151,87 L 156,98 L 145,99 L 148,110 L 137,109 L 137,121 L 126,116 L 124,128 L 113,121 L 109,133 L 100,127 L 91,133 L 87,121 L 76,128 L 74,116 L 63,121 L 63,109 L 52,110 L 55,99 L 44,98 L 49,87 L 38,84 L 46,75 L 36,67 L 46,61 L 38,52 L 49,49 L 44,38 L 55,38 L 52,26 L 63,28 L 63,15 L 74,20 L 76,7 L 87,14 L 91,2 Z" fill="#A87A2E"/>
-  </defs>
-  <use href="#navScalloped"/>
-  <circle cx="100" cy="100" r="68" fill="#FBF6E8"/>
-  <circle cx="100" cy="100" r="62" fill="none" stroke="#A87A2E" stroke-width="2.2"/>
+  <path d="M 100.0,6.0 L 110.7,18.7 L 124.3,9.2 L 131.4,24.2 L 147.0,18.6 L 149.9,34.9 L 166.5,33.5 L 165.1,50.1 L 181.4,53.0 L 175.8,68.6 L 190.8,75.7 L 181.3,89.3 L 194.0,100.0 L 181.3,110.7 L 190.8,124.3 L 175.8,131.4 L 181.4,147.0 L 165.1,149.9 L 166.5,166.5 L 149.9,165.1 L 147.0,181.4 L 131.4,175.8 L 124.3,190.8 L 110.7,181.3 L 100.0,194.0 L 89.3,181.3 L 75.7,190.8 L 68.6,175.8 L 53.0,181.4 L 50.1,165.1 L 33.5,166.5 L 34.9,149.9 L 18.6,147.0 L 24.2,131.4 L 9.2,124.3 L 18.7,110.7 L 6.0,100.0 L 18.7,89.3 L 9.2,75.7 L 24.2,68.6 L 18.6,53.0 L 34.9,50.1 L 33.5,33.5 L 50.1,34.9 L 53.0,18.6 L 68.6,24.2 L 75.7,9.2 L 89.3,18.7 Z" fill="#A87A2E"/>
+  <circle cx="100" cy="100" r="74" fill="#FBF6E8"/>
+  <circle cx="100" cy="100" r="68" fill="none" stroke="#A87A2E" stroke-width="2"/>
   <g transform="translate(100,82)">
     <path d="M -16,-3 L 0,-18 L 16,-3 L 16,12 L -16,12 Z"
           fill="#A87A2E"
           stroke="#A87A2E"
           stroke-width="1"
           stroke-linejoin="round"/>
-    <circle cx="0" cy="3" r="6" fill="#FBF6E8" stroke="#7A5520" stroke-width="0.8"/>
+    <circle cx="0" cy="3" r="5.5" fill="#FBF6E8" stroke="#7A5520" stroke-width="0.8"/>
     <path d="M 0,-1 L 2.2,3 L 0,7 L -2.2,3 Z" fill="#7A5520"/>
     <circle cx="0" cy="3" r="0.9" fill="#FBF6E8"/>
   </g>
   <text x="100" y="128" text-anchor="middle"
         font-family="Cormorant Garamond, Georgia, serif"
-        font-size="20" font-weight="700"
-        fill="#5A4520" letter-spacing="2">TAPUROTA</text>
+        font-size="19" font-weight="700"
+        fill="#5A4520" letter-spacing="1.5">TAPUROTA</text>
 </svg>`;
 
 const NAV_HTML = (active) => `
