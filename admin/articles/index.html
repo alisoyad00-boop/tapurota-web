@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>İlanlar — Tapu Rota Admin</title>
+  <title>Yatırım Rehberi — Tapu Rota Admin</title>
   <meta name="robots" content="noindex" />
   <link rel="icon" type="image/svg+xml" href="/brand_assets/logo.svg" />
   <link rel="stylesheet" href="/admin/admin.css" />
@@ -18,8 +18,8 @@
       </div>
     </div>
     <nav class="adm-nav">
-      <a href="/admin/" class="active">İlanlar</a>
-      <a href="/admin/articles/">Yatırım Rehberi</a>
+      <a href="/admin/">İlanlar</a>
+      <a href="/admin/articles/" class="active">Yatırım Rehberi</a>
     </nav>
     <div class="adm-top-right">
       <span class="adm-user" id="user-label">…</span>
@@ -31,10 +31,10 @@
   <div class="adm-wrap">
     <div class="adm-head">
       <div>
-        <h1>İlanlar</h1>
+        <h1>Yatırım Rehberi</h1>
         <p id="count-label">Yükleniyor…</p>
       </div>
-      <a href="/admin/edit" class="btn btn-gold">+ Yeni İlan Ekle</a>
+      <a href="/admin/articles/edit" class="btn btn-gold">+ Yeni Yazı Ekle</a>
     </div>
 
     <div id="list-slot">
@@ -43,7 +43,7 @@
   </div>
 
   <script type="module">
-    import { api, ensureAuth, escapeHtml, formatPrice, toast } from '/admin/admin.js';
+    import { api, ensureAuth, escapeHtml, toast } from '/admin/admin.js';
 
     const user = await ensureAuth();
     if (!user) { /* redirected */ } else {
@@ -58,17 +58,17 @@
     async function load() {
       const slot = document.getElementById('list-slot');
       try {
-        const { properties } = await api('/api/properties?all=1');
-        document.getElementById('count-label').textContent = `${properties.length} ilan`;
-        if (!properties.length) {
+        const { articles } = await api('/api/articles?all=1');
+        document.getElementById('count-label').textContent = `${articles.length} yazı`;
+        if (!articles.length) {
           slot.innerHTML = `
             <div class="card empty">
-              <h2>Henüz ilan yok</h2>
-              <p>İlk ilanı eklemek için yukarıdaki butona bas.</p>
+              <h2>Henüz yazı yok</h2>
+              <p>İlk yazıyı eklemek için yukarıdaki butona bas.</p>
             </div>`;
           return;
         }
-        slot.innerHTML = '<div class="prop-list">' + properties.map(renderRow).join('') + '</div>';
+        slot.innerHTML = '<div class="prop-list">' + articles.map(renderRow).join('') + '</div>';
         slot.querySelectorAll('[data-delete]').forEach((btn) => {
           btn.addEventListener('click', () => removeOne(btn.dataset.delete, btn.dataset.title));
         });
@@ -77,32 +77,33 @@
       }
     }
 
-    function renderRow(p) {
-      const cover = p.cover || (p.images && p.images[0]) || '';
+    function renderRow(a) {
+      const cover = a.cover || '';
       const pills = [];
-      if (p.featured) pills.push('<span class="pill featured">Öne Çıkan</span>');
-      if (!p.published) pills.push('<span class="pill unpub">Taslak</span>');
+      if (a.featured) pills.push('<span class="pill featured">Öne Çıkan</span>');
+      if (!a.published) pills.push('<span class="pill unpub">Taslak</span>');
+      pills.push(`<span class="pill">${escapeHtml(a.category_label || a.category)}</span>`);
       return `
         <div class="prop-row">
           <div class="thumb" style="background-image: url('${escapeHtml(cover)}')"></div>
           <div class="info">
-            <div class="t">${escapeHtml(p.title)}</div>
-            <div class="l">${escapeHtml(p.location)} · ${escapeHtml(p.area || '')}</div>
+            <div class="t">${escapeHtml(a.title)}</div>
+            <div class="l">${a.read_minutes ? `${a.read_minutes} dk okuma` : ''} ${a.excerpt ? '· ' + escapeHtml(a.excerpt.slice(0, 80)) + '…' : ''}</div>
           </div>
           <div>${pills.join(' ')}</div>
-          <div class="price">${formatPrice(p.price)}</div>
+          <div class="price"></div>
           <div class="actions">
-            <a class="btn btn-sm" href="/admin/edit?id=${p.id}">Düzenle</a>
-            <button class="btn btn-sm btn-danger" data-delete="${p.id}" data-title="${escapeHtml(p.title)}">Sil</button>
+            <a class="btn btn-sm" href="/admin/articles/edit?id=${a.id}">Düzenle</a>
+            <button class="btn btn-sm btn-danger" data-delete="${a.id}" data-title="${escapeHtml(a.title)}">Sil</button>
           </div>
         </div>`;
     }
 
     async function removeOne(id, title) {
-      if (!confirm(`"${title}" ilanı silinecek. Emin misin?`)) return;
+      if (!confirm(`"${title}" yazısı silinecek. Emin misin?`)) return;
       try {
-        await api(`/api/properties/${id}`, { method: 'DELETE' });
-        toast('İlan silindi.', 'success');
+        await api(`/api/articles/${id}`, { method: 'DELETE' });
+        toast('Yazı silindi.', 'success');
         load();
       } catch (err) {
         toast(err.message, 'error');

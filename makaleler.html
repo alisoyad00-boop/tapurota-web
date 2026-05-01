@@ -33,27 +33,8 @@
   <section class="section" style="padding-top:60px">
     <div class="container">
 
-      <!-- Featured article -->
-      <a href="makale-detay.html" class="article-feature" style="text-decoration:none;">
-        <div class="media">
-          <img src="https://picsum.photos/seed/article-feature/900/680" alt="Öne çıkan makale" />
-        </div>
-        <div>
-          <div class="meta-row">
-            <span>Öne Çıkan</span>
-            <span style="color:var(--text-ghost)">·</span>
-            <span>Arsa Yatırımı</span>
-            <span style="color:var(--text-ghost)">·</span>
-            <span>6 dk okuma</span>
-          </div>
-          <h2>Arsa Yatırımında 2026'da Dikkat Edilmesi Gereken 7 Madde</h2>
-          <p>İmar planı değişikliklerinden bölge dinamiklerine, tapu kontrolünden değerleme metodolojisine; arsa alımında size kazandıracak temel kontrol listesi.</p>
-          <span class="property-link" style="display:inline-flex;">
-            Yazının Tamamını Oku
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </span>
-        </div>
-      </a>
+      <!-- Featured article (dinamik) -->
+      <div id="article-feature-slot"></div>
 
       <!-- Filter bar -->
       <div class="filter-bar">
@@ -66,131 +47,12 @@
           <button class="filter-tab" data-filter-tab="bolge">Bölge Analizi</button>
         </div>
         <div class="filter-count">
-          <strong data-filter-count>9</strong> yazı
+          <strong data-filter-count>0</strong> yazı
         </div>
       </div>
 
-      <!-- Article grid -->
-      <div class="article-grid">
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="tapu">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-tapu/700/520" alt="Tapu işlemleri" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Tapu Rehberi</span><span class="dot">·</span><span>8 dk</span>
-            </div>
-            <h4>Tapu İşlemleri Adım Adım: Yatırımcının El Kitabı</h4>
-            <p>Randevudan harç ödemesine, müstakil tapudan hisseli tapuya — sürecin tamamı net ve şeffaf.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="imar">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-imar/700/520" alt="İmar durumu" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>İmar Sorgulama</span><span class="dot">·</span><span>5 dk</span>
-            </div>
-            <h4>İmar Durumu Nasıl Sorgulanır? Yatırımcının Öncelikleri</h4>
-            <p>Belediye sorgu sistemleri, plan notları ve imarın değer üzerindeki gerçek etkisi.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="degerleme">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-degerleme/700/520" alt="Gayrimenkul değerleme" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Değerleme</span><span class="dot">·</span><span>7 dk</span>
-            </div>
-            <h4>Gayrimenkul Değerlemesi Nasıl Yapılır? Profesyonel Yaklaşım</h4>
-            <p>Karşılaştırmalı analiz, gelir yöntemi, maliyet yöntemi — değerleme metodolojilerinin pratik özeti.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="arsa">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-arsa-yatirim/700/520" alt="Arsa yatırımı" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Arsa Yatırımı</span><span class="dot">·</span><span>6 dk</span>
-            </div>
-            <h4>Arsa Yatırımında 2026'da Dikkat Edilmesi Gereken 7 Madde</h4>
-            <p>Doğru parsel seçiminden hukuki kontrol listesine; yatırımcı için temel rehber.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="bolge">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-bolge-yalova/700/520" alt="Yalova bölge analizi" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Bölge Analizi</span><span class="dot">·</span><span>9 dk</span>
-            </div>
-            <h4>Yalova & Çınarcık: 2026 Yatırım Trendleri ve Beklentiler</h4>
-            <p>Bölgenin son 5 yıllık değer artış grafiği, planlanan altyapı projeleri ve sahil aksı analizi.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="bolge">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-bolge-sapanca/700/520" alt="Sapanca bölge analizi" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Bölge Analizi</span><span class="dot">·</span><span>7 dk</span>
-            </div>
-            <h4>Sapanca: Hobi Bahçesi mi, Uzun Vadeli Yatırım mı?</h4>
-            <p>Göl çevresi parsellerin avantajları, imar potansiyeli ve fiyat performansı incelemesi.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="tapu">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-hisseli/700/520" alt="Hisseli tapu" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Tapu Rehberi</span><span class="dot">·</span><span>5 dk</span>
-            </div>
-            <h4>Hisseli Tapu Nedir? Avantajları ve Risk Yönetimi</h4>
-            <p>Hisseli tapulu gayrimenkullerde dikkat edilmesi gerekenler ve ifraz süreci.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="imar">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-imar-degisiklik/700/520" alt="İmar değişikliği" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>İmar</span><span class="dot">·</span><span>6 dk</span>
-            </div>
-            <h4>İmar Plan Değişikliklerini Yatırım Lehinize Çevirmek</h4>
-            <p>Plan tadilatlarının değer üzerindeki etkisi, takip yöntemleri ve erken konumlanma.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card" data-filter-item="arsa">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-arsa-cesit/700/520" alt="Arsa türleri" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Arsa Yatırımı</span><span class="dot">·</span><span>4 dk</span>
-            </div>
-            <h4>Arsa Çeşitleri: Konut, Ticari, Tarla & Bağ Arsalarının Farkları</h4>
-            <p>Vasıflar arasındaki temel ayrımlar, yatırım profili ve dönüşüm potansiyelleri.</p>
-          </div>
-        </a>
-
-      </div>
+      <!-- Article grid (dinamik) -->
+      <div class="article-grid" id="article-grid"></div>
     </div>
   </section>
 
@@ -216,5 +78,23 @@
 
   <div id="footer-mount"></div>
   <script src="assets/partials.js"></script>
+  <script type="module">
+    import { loadArticlesInto, loadFeaturedFeature } from '/assets/articles.js';
+
+    const url = new URL(location.href);
+    const cat = url.searchParams.get('kategori');
+
+    const featured = await loadFeaturedFeature('#article-feature-slot');
+    await loadArticlesInto('#article-grid', {
+      ...(cat ? { category: cat } : {}),
+      ...(featured ? { skipId: featured.id } : {}),
+      empty: 'Henüz yazı eklenmemiş.',
+    });
+
+    if (cat) {
+      const tab = document.querySelector(`[data-filter-tab="${cat}"]`);
+      if (tab) tab.click();
+    }
+  </script>
 </body>
 </html>

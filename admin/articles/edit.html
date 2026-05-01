@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yazı Düzenle — Tapu Rota Admin</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logo.svg" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+  <div class="adm-top">
+    <div class="adm-brand">
+      <span class="dot"></span>
+      <div>
+        <div>Tapu Rota</div>
+        <small>Yönetim Paneli</small>
+      </div>
+    </div>
+    <nav class="adm-nav">
+      <a href="/admin/">İlanlar</a>
+      <a href="/admin/articles/" class="active">Yatırım Rehberi</a>
+    </nav>
+    <div class="adm-top-right">
+      <a href="/admin/articles/" class="btn btn-sm">← Listeye Dön</a>
+    </div>
+  </div>
+
+  <div class="adm-wrap">
+    <div class="adm-head">
+      <div>
+        <h1 id="page-title">Yeni Yazı</h1>
+        <p id="page-sub">Yatırım Rehberi'ne yeni bir içerik ekle.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-danger" id="delete-btn" style="display:none">Sil</button>
+        <button class="btn btn-gold" id="save-btn">Kaydet</button>
+      </div>
+    </div>
+
+    <div id="alert-slot"></div>
+
+    <form id="form" class="card" autocomplete="off">
+      <div class="form-grid">
+        <div class="field full">
+          <label for="title">Başlık *</label>
+          <input id="title" type="text" required maxlength="200" placeholder="örn. Arsa Yatırımında Dikkat Edilecek 7 Madde" />
+        </div>
+
+        <div class="field">
+          <label for="category">Kategori *</label>
+          <select id="category" required>
+            <option value="arsa">Arsa Yatırımı</option>
+            <option value="tapu">Tapu Rehberi</option>
+            <option value="imar">İmar Sorgulama</option>
+            <option value="degerleme">Değerleme</option>
+            <option value="bolge">Bölge Analizi</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="read_minutes">Tahmini okuma süresi (dakika)</label>
+          <input id="read_minutes" type="number" min="1" max="60" placeholder="örn. 5" />
+        </div>
+
+        <div class="field full">
+          <label for="excerpt">Kısa Özet</label>
+          <textarea id="excerpt" maxlength="300" placeholder="Karta çıkacak kısa açıklama (max 300 karakter)" style="min-height:70px"></textarea>
+          <span class="hint">Liste sayfasında kart altında görünür.</span>
+        </div>
+
+        <div class="field full">
+          <label for="cover">Kapak Fotoğrafı</label>
+          <div id="cover-slot"></div>
+          <span class="hint">Yazının üstünde tam genişlik görünür. Tek görsel, max 4 MB.</span>
+        </div>
+
+        <div class="field full">
+          <label for="body">İçerik (Markdown destekli)</label>
+          <textarea id="body" placeholder="Yazının tam metni..." style="min-height: 380px; font-family: ui-monospace, 'Cascadia Code', monospace; font-size: 13.5px; line-height: 1.65;"></textarea>
+          <span class="hint">
+            Markdown: <code>## Başlık</code>, <code>### Alt başlık</code>, <code>**kalın**</code>, <code>*italik*</code>, <code>[yazı](url)</code>, <code>- liste</code>, paragraf için boş satır bırak.
+          </span>
+        </div>
+
+        <div class="field">
+          <div class="checkbox-row">
+            <input id="featured" type="checkbox" />
+            <label for="featured">Anasayfada öne çıkan</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="checkbox-row">
+            <input id="published" type="checkbox" checked />
+            <label for="published">Yayında (kapatırsan müşteri göremez)</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { api, ensureAuth, escapeHtml, toast, uploadFile, deleteUploaded } from '/admin/admin.js';
+
+    const user = await ensureAuth();
+    if (!user) { /* redirected */ }
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    const isEdit = !!id;
+
+    if (isEdit) {
+      document.getElementById('page-title').textContent = 'Yazı Düzenle';
+      document.getElementById('delete-btn').style.display = 'inline-flex';
+    }
+
+    /* Cover image state */
+    let cover = null;  // { url } or null
+
+    function renderCover() {
+      const slot = document.getElementById('cover-slot');
+      if (cover && cover.url) {
+        slot.innerHTML = `
+          <div class="img-grid" style="grid-template-columns: minmax(200px, 320px);">
+            <div class="img-card cover">
+              <img src="${escapeHtml(cover.url)}" alt="" />
+              <div class="overlay">
+                <span class="badge">Kapak</span>
+                <button type="button" class="icon-btn" id="cover-del" title="Sil">×</button>
+              </div>
+            </div>
+          </div>`;
+        document.getElementById('cover-del').addEventListener('click', removeCover);
+      } else {
+        slot.innerHTML = `
+          <div class="img-grid" style="grid-template-columns: minmax(200px, 320px);">
+            <label class="img-add">
+              <span style="font-size:24px;">+</span>
+              <span>Kapak fotoğrafı seç</span>
+              <input type="file" accept="image/*" id="cover-input" />
+            </label>
+          </div>`;
+        document.getElementById('cover-input').addEventListener('change', handleCoverFile);
+      }
+    }
+
+    async function handleCoverFile(e) {
+      const f = (e.target.files || [])[0];
+      if (!f) return;
+      if (!f.type.startsWith('image/')) { toast('Resim seçmelisin', 'error'); return; }
+      if (f.size > 4 * 1024 * 1024) { toast('4MB üstü, küçük bir görsel kullan', 'error'); return; }
+      cover = { url: URL.createObjectURL(f), uploading: true };
+      renderCover();
+      try {
+        const url = await uploadFile(f);
+        cover = { url };
+        renderCover();
+      } catch (err) {
+        cover = null;
+        renderCover();
+        toast(err.message, 'error');
+      }
+      e.target.value = '';
+    }
+
+    async function removeCover() {
+      if (!confirm('Kapağı sil?')) return;
+      if (cover && cover.url && cover.url.startsWith('http') && !cover.uploading) {
+        deleteUploaded(cover.url).catch(() => {});
+      }
+      cover = null;
+      renderCover();
+    }
+
+    /* Load existing if editing */
+    async function load() {
+      if (!isEdit) {
+        renderCover();
+        return;
+      }
+      try {
+        const { article } = await api(`/api/articles/${id}`);
+        document.getElementById('title').value = article.title || '';
+        document.getElementById('category').value = article.category || 'arsa';
+        document.getElementById('read_minutes').value = article.read_minutes ?? '';
+        document.getElementById('excerpt').value = article.excerpt || '';
+        document.getElementById('body').value = article.body || '';
+        document.getElementById('featured').checked = !!article.featured;
+        document.getElementById('published').checked = !!article.published;
+        cover = article.cover ? { url: article.cover } : null;
+        renderCover();
+      } catch (err) {
+        document.getElementById('alert-slot').innerHTML = `<div class="alert">${err.message}</div>`;
+      }
+    }
+
+    /* Save */
+    document.getElementById('save-btn').addEventListener('click', async () => {
+      const slot = document.getElementById('alert-slot');
+      slot.innerHTML = '';
+      const btn = document.getElementById('save-btn');
+      btn.disabled = true;
+      const old = btn.textContent;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      const payload = {
+        title:        document.getElementById('title').value.trim(),
+        category:     document.getElementById('category').value,
+        excerpt:      document.getElementById('excerpt').value.trim(),
+        body:         document.getElementById('body').value,
+        cover:        cover && !cover.uploading ? cover.url : null,
+        read_minutes: document.getElementById('read_minutes').value ? Number(document.getElementById('read_minutes').value) : null,
+        featured:     document.getElementById('featured').checked,
+        published:    document.getElementById('published').checked,
+      };
+
+      try {
+        if (isEdit) {
+          await api(`/api/articles/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+          toast('Kaydedildi.', 'success');
+        } else {
+          const r = await api('/api/articles', { method: 'POST', body: JSON.stringify(payload) });
+          toast('Yazı eklendi.', 'success');
+          setTimeout(() => location.href = `/admin/articles/edit?id=${r.article.id}`, 600);
+        }
+      } catch (err) {
+        slot.innerHTML = `<div class="alert">${err.message}</div>`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = old;
+      }
+    });
+
+    document.getElementById('delete-btn').addEventListener('click', async () => {
+      if (!confirm('Bu yazı silinecek. Emin misin?')) return;
+      try {
+        await api(`/api/articles/${id}`, { method: 'DELETE' });
+        toast('Yazı silindi.', 'success');
+        setTimeout(() => location.href = '/admin/articles/', 500);
+      } catch (err) {
+        toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('save-btn').click();
+    });
+
+    load();
+  </script>
+</body>
+</html>

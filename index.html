@@ -223,52 +223,8 @@
         </div>
       </div>
 
-      <div class="article-grid">
-        <a href="makale-detay.html" class="article-card">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-arsa-yatirim/700/520" alt="Arsa yatırımı rehberi" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Arsa Yatırımı</span>
-              <span class="dot">·</span>
-              <span>6 dk okuma</span>
-            </div>
-            <h4>Arsa Yatırımında 2026'da Dikkat Edilmesi Gereken 7 Madde</h4>
-            <p>İmar planı değişikliklerinden bölge dinamiklerine; arsa alımında size kazandıracak temel kontrol listesi.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-tapu/700/520" alt="Tapu işlemleri rehberi" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>Tapu Rehberi</span>
-              <span class="dot">·</span>
-              <span>8 dk okuma</span>
-            </div>
-            <h4>Tapu İşlemleri Adım Adım: Yatırımcının El Kitabı</h4>
-            <p>Randevudan harç ödemesine, müstakil tapudan hisseli tapuya — sürecin tamamı net ve şeffaf.</p>
-          </div>
-        </a>
-
-        <a href="makale-detay.html" class="article-card">
-          <div class="article-media">
-            <img src="https://picsum.photos/seed/article-imar/700/520" alt="İmar durumu sorgulama" />
-          </div>
-          <div class="article-body">
-            <div class="article-meta-row">
-              <span>İmar Sorgulama</span>
-              <span class="dot">·</span>
-              <span>5 dk okuma</span>
-            </div>
-            <h4>İmar Durumu Nasıl Sorgulanır? Yatırımcının Öncelikleri</h4>
-            <p>Belediye sorgu sistemleri, plan notları ve imarın değer üzerindeki gerçek etkisi.</p>
-          </div>
-        </a>
-      </div>
+      <!-- Articles preview (DB'den dinamik, 3 yazı) -->
+      <div class="article-grid" id="article-preview-grid"></div>
 
       <div style="text-align:center; margin-top:60px;">
         <a href="makaleler.html" class="btn btn-ghost">
@@ -305,7 +261,9 @@
   <script src="assets/partials.js"></script>
   <script type="module">
     import { loadPropertiesInto } from '/assets/properties.js';
+    import { loadArticlesInto } from '/assets/articles.js';
     loadPropertiesInto('#featured-grid', { featured: true, empty: 'Henüz öne çıkan ilan yok.' });
+    loadArticlesInto('#article-preview-grid', { limit: 3, empty: 'Henüz yazı yok.' });
   </script>
 </body>
 </html>
