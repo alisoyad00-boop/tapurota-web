@@ -1,7 +1,29 @@
 /* Shared header & footer injection — keeps nav consistent across pages */
 
 const LOGO_SVG = `
-<img src="https://i.imgur.com/HLZP8N3.jpeg" class="nav-brand-mark" alt="Tapu Rota" />`;
+<svg viewBox="0 0 200 200" class="nav-brand-mark" xmlns="http://www.w3.org/2000/svg" aria-label="TapuRota">
+  <defs>
+    <path id="navScalloped" d="M 100,8
+      L 109,2 L 113,14 L 124,7 L 126,20 L 137,15 L 137,28 L 148,26 L 145,38 L 156,38 L 151,49 L 162,52 L 154,61 L 164,67 L 154,75 L 162,84 L 151,87 L 156,98 L 145,99 L 148,110 L 137,109 L 137,121 L 126,116 L 124,128 L 113,121 L 109,133 L 100,127 L 91,133 L 87,121 L 76,128 L 74,116 L 63,121 L 63,109 L 52,110 L 55,99 L 44,98 L 49,87 L 38,84 L 46,75 L 36,67 L 46,61 L 38,52 L 49,49 L 44,38 L 55,38 L 52,26 L 63,28 L 63,15 L 74,20 L 76,7 L 87,14 L 91,2 Z" fill="#A87A2E"/>
+  </defs>
+  <use href="#navScalloped"/>
+  <circle cx="100" cy="100" r="68" fill="#FBF6E8"/>
+  <circle cx="100" cy="100" r="62" fill="none" stroke="#A87A2E" stroke-width="2.2"/>
+  <g transform="translate(100,82)">
+    <path d="M -16,-3 L 0,-18 L 16,-3 L 16,12 L -16,12 Z"
+          fill="#A87A2E"
+          stroke="#A87A2E"
+          stroke-width="1"
+          stroke-linejoin="round"/>
+    <circle cx="0" cy="3" r="6" fill="#FBF6E8" stroke="#7A5520" stroke-width="0.8"/>
+    <path d="M 0,-1 L 2.2,3 L 0,7 L -2.2,3 Z" fill="#7A5520"/>
+    <circle cx="0" cy="3" r="0.9" fill="#FBF6E8"/>
+  </g>
+  <text x="100" y="128" text-anchor="middle"
+        font-family="Cormorant Garamond, Georgia, serif"
+        font-size="20" font-weight="700"
+        fill="#5A4520" letter-spacing="2">TAPUROTA</text>
+</svg>`;
 
 const NAV_HTML = (active) => `
 <nav class="nav" id="site-nav">
