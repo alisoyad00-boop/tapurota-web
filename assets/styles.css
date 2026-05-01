@@ -6,38 +6,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* surfaces */
-  --bg:           #0A0807;
-  --bg-1:         #100D0B;
-  --bg-2:         #161310;
-  --bg-3:         #1E1A16;
-  --bg-4:         #2A241D;
+  /* surfaces — açık krem tema */
+  --bg:           #F7F1E3;
+  --bg-1:         #F0E7D2;
+  --bg-2:         #E8DCC0;
+  --bg-3:         #DCCDA8;
+  --bg-4:         #CDB987;
 
-  /* gold ramp */
-  --gold:         #D4AF6A;
-  --gold-bright:  #E8C77A;
-  --gold-pale:    #F5D98A;
-  --gold-warm:    #C9A05A;
-  --gold-deep:    #9A7A4A;
-  --gold-shadow:  #6B5232;
+  /* gold ramp — açık zeminde kontrast için biraz koyulaştırıldı */
+  --gold:         #A87A2E;
+  --gold-bright:  #C29541;
+  --gold-pale:    #D8B870;
+  --gold-warm:    #9A6E25;
+  --gold-deep:    #6F4F18;
+  --gold-shadow:  #4A3510;
 
-  /* text */
-  --text:         #F5F1E8;
-  --text-strong:  #FBF7EE;
-  --text-muted:   #B8AE9F;
-  --text-subtle:  #7A7165;
-  --text-ghost:   #5A524A;
+  /* text — koyu kahve / siyah */
+  --text:         #2C2113;
+  --text-strong:  #1A1208;
+  --text-muted:   #6E5C45;
+  --text-subtle:  #8A7860;
+  --text-ghost:   #B5A488;
 
   /* borders */
-  --border:        rgba(212, 175, 106, 0.10);
-  --border-soft:   rgba(245, 241, 232, 0.06);
-  --border-strong: rgba(212, 175, 106, 0.28);
-  --border-bright: rgba(232, 199, 122, 0.45);
+  --border:        rgba(168, 122, 46, 0.18);
+  --border-soft:   rgba(44, 33, 19, 0.08);
+  --border-strong: rgba(168, 122, 46, 0.40);
+  --border-bright: rgba(168, 122, 46, 0.60);
 
-  /* shadows */
-  --shadow-gold:    0 24px 60px -24px rgba(212, 175, 106, 0.30);
-  --shadow-deep:    0 30px 80px -20px rgba(0, 0, 0, 0.7);
-  --shadow-card:    0 1px 0 rgba(245,241,232,.04) inset, 0 30px 60px -30px rgba(0,0,0,.6);
+  /* shadows — açık tema için yumuşak */
+  --shadow-gold:    0 24px 60px -24px rgba(168, 122, 46, 0.25);
+  --shadow-deep:    0 30px 80px -20px rgba(74, 53, 16, 0.18);
+  --shadow-card:    0 1px 0 rgba(255,255,255,.5) inset, 0 18px 40px -22px rgba(74,53,16,.20);
 
   /* typography */
   --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
@@ -61,7 +61,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(212,175,106,.15);
+  -webkit-tap-highlight-color: rgba(168,122,46,.15);
   overflow-x: clip;
 }
 body {
@@ -76,8 +76,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,175,106,.08), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(212,175,106,.04), transparent 60%);
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(168,122,46,.06), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(168,122,46,.04), transparent 60%);
   background-attachment: fixed;
 }
 
@@ -107,7 +107,7 @@ body::before {
   background-size: cover;
 }
 
-::selection { background: var(--gold); color: var(--bg); }
+::selection { background: var(--gold); color: #FFF7E5; }
 
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; transition: color .3s var(--ease-out); }
@@ -204,7 +204,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border-bottom: 1px solid transparent;
 }
 .nav.scrolled {
-  background: rgba(10, 8, 7, 0.78);
+  background: rgba(247, 241, 227, 0.85);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   padding: 12px 0;
@@ -288,12 +288,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-strong);
-  background: linear-gradient(180deg, rgba(212,175,106,.08), rgba(212,175,106,.02));
+  background: linear-gradient(180deg, rgba(168,122,46,.08), rgba(168,122,46,.02));
   transition: border-color .3s var(--ease-out), background .3s var(--ease-out), transform .3s var(--ease-spring);
 }
 .nav-cta:hover {
   border-color: var(--gold);
-  background: linear-gradient(180deg, rgba(212,175,106,.18), rgba(212,175,106,.06));
+  background: linear-gradient(180deg, rgba(168,122,46,.18), rgba(168,122,46,.06));
   transform: translateY(-1px);
 }
 .nav-cta svg { transition: transform .35s var(--ease-spring); }
@@ -306,8 +306,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border-radius: 999px;
   align-items: center;
   justify-content: center;
-  background: rgba(212,175,106,0.04);
-  -webkit-tap-highlight-color: rgba(212,175,106,.2);
+  background: rgba(168,122,46,0.04);
+  -webkit-tap-highlight-color: rgba(168,122,46,.2);
 }
 .nav-mobile-toggle:active { transform: scale(0.96); }
 .nav-mobile-toggle span {
@@ -395,10 +395,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   display: flex; align-items: center; justify-content: center;
   color: var(--gold);
   flex-shrink: 0;
-  -webkit-tap-highlight-color: rgba(212,175,106,.2);
+  -webkit-tap-highlight-color: rgba(168,122,46,.2);
   transition: background .25s var(--ease-out), transform .25s var(--ease-spring);
 }
-.mobile-drawer-close:active { background: rgba(212,175,106,.1); transform: scale(0.94); }
+.mobile-drawer-close:active { background: rgba(168,122,46,.1); transform: scale(0.94); }
 
 .mobile-drawer-links {
   list-style: none;
@@ -418,12 +418,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--text-strong);
-  -webkit-tap-highlight-color: rgba(212,175,106,.15);
+  -webkit-tap-highlight-color: rgba(168,122,46,.15);
   transition: background .25s var(--ease-out), color .25s var(--ease-out), padding-left .3s var(--ease-spring);
   min-height: 44px;
 }
 .mobile-drawer-links a:active {
-  background: rgba(212,175,106,.06);
+  background: rgba(168,122,46,.06);
   padding-left: 32px;
 }
 .mobile-drawer-links a.active {
@@ -456,12 +456,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   gap: 14px;
   padding: 12px 8px;
   border-radius: 10px;
-  -webkit-tap-highlight-color: rgba(212,175,106,.15);
+  -webkit-tap-highlight-color: rgba(168,122,46,.15);
   transition: background .25s var(--ease-out);
   min-height: 44px;
 }
 .mobile-drawer-contact-item:active {
-  background: rgba(212,175,106,.06);
+  background: rgba(168,122,46,.06);
 }
 .mobile-drawer-contact-item svg {
   width: 20px; height: 20px;
@@ -504,11 +504,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .btn-gold {
   background: linear-gradient(180deg, var(--gold-pale) 0%, var(--gold) 50%, var(--gold-deep) 100%);
   color: #1A1208;
-  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 18px 40px -18px rgba(212,175,106,.6);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 18px 40px -18px rgba(168,122,46,.6);
 }
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 24px 50px -16px rgba(232,199,122,.7);
+  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 24px 50px -16px rgba(194,149,65,.7);
 }
 .btn-gold:active { transform: translateY(0); }
 
@@ -519,7 +519,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .btn-ghost:hover {
   border-color: var(--gold);
-  background: rgba(212,175,106,.06);
+  background: rgba(168,122,46,.06);
   transform: translateY(-2px);
 }
 
@@ -540,8 +540,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(212,175,106,.10), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(212,175,106,.06), transparent 60%);
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(168,122,46,.10), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(168,122,46,.06), transparent 60%);
   pointer-events: none;
 }
 .hero::after {
@@ -552,7 +552,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   bottom: 0;
   height: 220px;
   background:
-    linear-gradient(90deg, transparent 0%, rgba(212,175,106,.45) 50%, transparent 100%) bottom / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent 0%, rgba(168,122,46,.45) 50%, transparent 100%) bottom / 100% 1px no-repeat,
     linear-gradient(180deg, transparent 0%, var(--bg) 100%);
   pointer-events: none;
   z-index: 1;
@@ -609,7 +609,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, transparent 40%, rgba(10,8,7,.55) 75%, var(--bg) 100%),
-              linear-gradient(120deg, rgba(212,175,106,.08), transparent 40%);
+              linear-gradient(120deg, rgba(168,122,46,.08), transparent 40%);
   pointer-events: none;
 }
 .hero-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05); }
@@ -638,12 +638,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-size: 22px;
   font-weight: 500;
   line-height: 1.2;
-  color: var(--text-strong);
+  color: #FBF7EE;
   margin-bottom: 6px;
 }
 .hero-visual-overlay .meta {
   font-size: 12px;
-  color: var(--text-muted);
+  color: #C8BDA8;
   display: flex; gap: 14px;
 }
 
@@ -793,7 +793,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.02em;
-  box-shadow: 0 6px 18px -6px rgba(212,175,106,.5);
+  box-shadow: 0 6px 18px -6px rgba(168,122,46,.5);
 }
 .property-body {
   padding: 28px 28px 30px;
@@ -889,7 +889,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border: 1px solid var(--border-strong);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 24px;
-  background: radial-gradient(circle at 30% 30%, rgba(212,175,106,.15), transparent 60%);
+  background: radial-gradient(circle at 30% 30%, rgba(168,122,46,.15), transparent 60%);
 }
 .cat-icon svg { width: 26px; height: 26px; color: var(--gold); }
 .cat-card h4 {
@@ -937,7 +937,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .about-visual::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(212,175,106,.06), transparent 50%, rgba(0,0,0,.4));
+  background: linear-gradient(135deg, rgba(168,122,46,.06), transparent 50%, rgba(0,0,0,.4));
   pointer-events: none;
 }
 .about-quote {
@@ -1044,7 +1044,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(ellipse 60% 100% at 50% 0%, rgba(212,175,106,.10), transparent 60%),
+    radial-gradient(ellipse 60% 100% at 50% 0%, rgba(168,122,46,.10), transparent 60%),
     var(--bg-1);
   text-align: center;
   overflow: hidden;
@@ -1098,7 +1098,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .footer-social svg { width: 16px; height: 16px; color: var(--gold); }
 .footer-social:hover {
   border-color: var(--gold);
-  background: rgba(212,175,106,.08);
+  background: rgba(168,122,46,.08);
 }
 
 .footer-col h5 {
@@ -1140,7 +1140,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   overflow: hidden;
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(212,175,106,.12), transparent 60%);
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(168,122,46,.12), transparent 60%);
 }
 .page-head .topo-bg { opacity: 0.10; }
 .page-head .container { position: relative; z-index: 2; }
@@ -1186,7 +1186,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .filter-tab:hover { color: var(--text-strong); }
 .filter-tab.active {
-  background: rgba(212,175,106,.08);
+  background: rgba(168,122,46,.08);
   border-color: var(--border-strong);
   color: var(--gold);
 }
@@ -1387,7 +1387,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border-radius: 50%;
   border: 1px solid var(--border-strong);
   display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(circle at 30% 30%, rgba(212,175,106,.12), transparent 60%);
+  background: radial-gradient(circle at 30% 30%, rgba(168,122,46,.12), transparent 60%);
 }
 .contact-info-icon svg { width: 18px; height: 18px; color: var(--gold); }
 .contact-info-key {
@@ -1418,7 +1418,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   padding: 44px 40px 36px;
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,106,.12), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(168,122,46,.12), transparent 60%),
     linear-gradient(180deg, var(--bg-2), var(--bg-1));
   border: 1px solid var(--border);
   text-align: center;
@@ -1526,7 +1526,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .form-field textarea:focus {
   outline: none;
   border-color: var(--gold);
-  background: rgba(212,175,106,.04);
+  background: rgba(168,122,46,.04);
 }
 .form .btn { width: 100%; justify-content: center; margin-top: 12px; }
 
@@ -1615,7 +1615,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-size: 22px;
   line-height: 1.45;
   color: var(--text-strong);
-  background: linear-gradient(90deg, rgba(212,175,106,.04), transparent);
+  background: linear-gradient(90deg, rgba(168,122,46,.04), transparent);
 }
 .article-reading ul, .article-reading ol {
   margin: 20px 0 24px 24px;
@@ -1705,12 +1705,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     padding: 10px 16px;
     font-size: 11px;
     min-height: 40px;
-    -webkit-tap-highlight-color: rgba(212,175,106,.2);
+    -webkit-tap-highlight-color: rgba(168,122,46,.2);
   }
   .filter-count { font-size: 11px; }
 
   /* CTAs */
-  .btn { padding: 14px 24px; font-size: 12px; min-height: 48px; -webkit-tap-highlight-color: rgba(212,175,106,.2); }
+  .btn { padding: 14px 24px; font-size: 12px; min-height: 48px; -webkit-tap-highlight-color: rgba(168,122,46,.2); }
   .cta-band { padding: 60px 0 70px; }
   .cta-actions .btn { width: 100%; justify-content: center; }
 
