@@ -222,19 +222,31 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 16px;
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  gap: 14px;
   color: var(--text-strong);
+  text-decoration: none;
 }
 .nav-brand-mark {
-  width: 58px;
-  height: 58px;
+  width: 70px;
+  height: 70px;
   flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: contain;
+  display: block;
 }
-.nav-brand-text { line-height: 1; }
+.nav-brand-tagline {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--gold);
+  text-transform: uppercase;
+  line-height: 1.3;
+  max-width: 110px;
+}
+/* legacy slot — keeps backward compat */
+.nav-brand-text { line-height: 1; display: none; }
 .nav-brand-text small {
   display: block;
   font-family: var(--font-body);
@@ -1798,10 +1810,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   .newsletter-form .btn { width: 100%; justify-content: center; }
 }
 
+@media (max-width: 700px) {
+  .nav-brand-mark { width: 56px; height: 56px; }
+  .nav-brand-tagline { font-size: 10.5px; max-width: 90px; letter-spacing: 0.22em; }
+}
 @media (max-width: 420px) {
+  .nav-brand-tagline { display: none; }
   .nav-brand-text small { display: none; }
-  .nav-brand { font-size: 22px; gap: 12px; font-weight: 700; }
-  .nav-brand-mark { width: 42px; height: 42px; }
+  .nav-brand { gap: 10px; }
+  .nav-brand-mark { width: 48px; height: 48px; }
   .hakkimizda-process { grid-template-columns: 1fr !important; }
   .hero-meta-item .num { font-size: 28px; }
   .about-stat .num { font-size: 30px; }

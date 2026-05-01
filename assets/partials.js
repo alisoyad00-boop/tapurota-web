@@ -1,42 +1,14 @@
 /* Shared header & footer injection — keeps nav consistent across pages */
 
 const LOGO_SVG = `
-<svg viewBox="0 0 400 400" class="nav-brand-mark" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <defs>
-    <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C9A05A"/>
-      <stop offset="55%" stop-color="#A87A2E"/>
-      <stop offset="100%" stop-color="#7A5520"/>
-    </linearGradient>
-    <radialGradient id="navGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#A87A2E" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="#A87A2E" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <circle cx="200" cy="200" r="195" fill="url(#navGlow)"/>
-  <circle cx="200" cy="200" r="180" fill="none" stroke="url(#navGold)" stroke-width="18"/>
-  <circle cx="200" cy="200" r="152" fill="none" stroke="url(#navGold)" stroke-width="5"/>
-  <g transform="translate(200,200)">
-    <path d="M -58,-18 L 0,-75 L 58,-18 L 58,58 L -58,58 Z"
-          fill="url(#navGold)"
-          stroke="url(#navGold)"
-          stroke-width="8"
-          stroke-linejoin="round"/>
-    <circle cx="0" cy="22" r="24" fill="#FBF6E8" stroke="#7A5520" stroke-width="3"/>
-    <path d="M 0,4 L 9,22 L 0,40 L -9,22 Z" fill="#7A5520"/>
-    <circle cx="0" cy="22" r="3.5" fill="#FBF6E8"/>
-  </g>
-</svg>`;
+<img src="https://i.imgur.com/HLZP8N3.jpeg" class="nav-brand-mark" alt="Tapu Rota" />`;
 
 const NAV_HTML = (active) => `
 <nav class="nav" id="site-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-brand" aria-label="TapuRota — Anasayfa">
       ${LOGO_SVG}
-      <span class="nav-brand-text">
-        TapuRota
-        <small>Doğru Yatırımın Rotası</small>
-      </span>
+      <small class="nav-brand-tagline">Doğru Yatırımın Rotası</small>
     </a>
     <ul class="nav-links">
       <li><a href="index.html" class="${active==='home'?'active':''}">Anasayfa</a></li>
@@ -58,10 +30,7 @@ const NAV_HTML = (active) => `
   <div class="mobile-drawer-head">
     <a href="index.html" class="nav-brand" aria-label="TapuRota">
       ${LOGO_SVG}
-      <span class="nav-brand-text">
-        TapuRota
-        <small>Doğru Yatırımın Rotası</small>
-      </span>
+      <small class="nav-brand-tagline">Doğru Yatırımın Rotası</small>
     </a>
     <button class="mobile-drawer-close" aria-label="Menüyü kapat">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M6 6l12 12M18 6l-12 12"/></svg>
@@ -114,10 +83,7 @@ const FOOTER_HTML = `
     <div class="footer-brand">
       <a href="index.html" class="nav-brand" aria-label="TapuRota">
         ${LOGO_SVG}
-        <span class="nav-brand-text">
-          TapuRota
-          <small>Doğru Yatırımın Rotası</small>
-        </span>
+        <small class="nav-brand-tagline">Doğru Yatırımın Rotası</small>
       </a>
       <p style="margin-top:22px">
         Gayrimenkul sektöründe güven, şeffaflık ve sürdürülebilir değer anlayışıyla hizmet veren yatırım odaklı emlak platformu.
