@@ -22,10 +22,10 @@ const LOGO_SVG = `
 const NAV_HTML = (active) => `
 <nav class="nav" id="site-nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand" aria-label="Tapu Rota — Anasayfa">
+    <a href="index.html" class="nav-brand" aria-label="TapuRota — Anasayfa">
       ${LOGO_SVG}
       <span class="nav-brand-text">
-        Tapu Rota
+        TapuRota
         <small>Doğru Yatırımın Rotası</small>
       </span>
     </a>
@@ -47,10 +47,10 @@ const NAV_HTML = (active) => `
 <div class="mobile-drawer-overlay" id="mobile-drawer-overlay" aria-hidden="true"></div>
 <aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" aria-label="Mobil menü">
   <div class="mobile-drawer-head">
-    <a href="index.html" class="nav-brand" aria-label="Tapu Rota">
+    <a href="index.html" class="nav-brand" aria-label="TapuRota">
       ${LOGO_SVG}
       <span class="nav-brand-text">
-        Tapu Rota
+        TapuRota
         <small>Doğru Yatırımın Rotası</small>
       </span>
     </a>
@@ -103,10 +103,10 @@ const FOOTER_HTML = `
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="index.html" class="nav-brand" aria-label="Tapu Rota">
+      <a href="index.html" class="nav-brand" aria-label="TapuRota">
         ${LOGO_SVG}
         <span class="nav-brand-text">
-          Tapu Rota
+          TapuRota
           <small>Doğru Yatırımın Rotası</small>
         </span>
       </a>
@@ -157,7 +157,7 @@ const FOOTER_HTML = `
     </div>
   </div>
   <div class="footer-base">
-    <span>© <span id="yr"></span> Tapu Rota — Tüm hakları saklıdır.</span>
+    <span>© <span id="yr"></span> TapuRota — Tüm hakları saklıdır.</span>
     <span>Gizlilik · KVKK · Çerez Politikası</span>
   </div>
 </footer>`;
