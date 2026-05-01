@@ -147,8 +147,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   color: var(--text-strong);
 }
 .h-display em {
-  font-style: normal;
-  font-weight: 600;
+  font-style: italic;
+  font-weight: 500;
   color: var(--gold);
 }
 
@@ -161,8 +161,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   color: var(--text-strong);
 }
 .h-section em {
-  font-style: normal;
-  font-weight: 600;
+  font-style: italic;
+  font-weight: 500;
   color: var(--gold);
 }
 
