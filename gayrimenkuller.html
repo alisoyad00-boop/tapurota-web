@@ -6,7 +6,7 @@
   <title>Gayrimenkuller — Tapu Rota | Arsa, Tarla, Konut & Ticari Yatırım</title>
   <meta name="description" content="Tapu Rota seçili portföyü: yatırımlık arsalar, tarlalar, konutlar ve ticari gayrimenkuller. Bölge analizi ve şeffaf süreçle." />
   <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg" />
-  <link rel="stylesheet" href="assets/styles.css?v=7" />
+  <link rel="stylesheet" href="assets/styles.css?v=8" />
 </head>
 <body data-page="properties">
   <div id="nav-mount"></div>
@@ -37,10 +37,9 @@
       <div class="filter-bar">
         <div class="filter-tabs">
           <button class="filter-tab active" data-filter-tab="all">Tümü</button>
-          <button class="filter-tab" data-filter-tab="arsa">Arsa</button>
-          <button class="filter-tab" data-filter-tab="tarla">Tarla</button>
-          <button class="filter-tab" data-filter-tab="bag">Bağ Evi</button>
+          <button class="filter-tab" data-filter-tab="arazi">Arazi</button>
           <button class="filter-tab" data-filter-tab="konut">Konut</button>
+          <button class="filter-tab" data-filter-tab="bagevi">Bağevi</button>
           <button class="filter-tab" data-filter-tab="ticari">Ticari</button>
         </div>
         <div class="filter-count">
@@ -81,9 +80,9 @@
   </section>
 
   <div id="footer-mount"></div>
-  <script src="assets/partials.js?v=7"></script>
+  <script src="assets/partials.js?v=8"></script>
   <script type="module">
-    import { loadPropertiesInto } from '/assets/properties.js?v=7';
+    import { loadPropertiesInto } from '/assets/properties.js?v=8';
     const url = new URL(location.href);
     const cat = url.searchParams.get('kategori');
     await loadPropertiesInto('#property-grid', cat ? { category: cat } : {});

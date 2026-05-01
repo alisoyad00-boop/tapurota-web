@@ -150,9 +150,9 @@ const FOOTER_HTML = `
     <div class="footer-col">
       <h5>Kategoriler</h5>
       <ul>
-        <li><a href="gayrimenkuller.html?kategori=arsa">Arsa</a></li>
-        <li><a href="gayrimenkuller.html?kategori=tarla">Tarla</a></li>
+        <li><a href="gayrimenkuller.html?kategori=arazi">Arazi</a></li>
         <li><a href="gayrimenkuller.html?kategori=konut">Konut</a></li>
+        <li><a href="gayrimenkuller.html?kategori=bagevi">Bağevi</a></li>
         <li><a href="gayrimenkuller.html?kategori=ticari">Ticari</a></li>
       </ul>
     </div>

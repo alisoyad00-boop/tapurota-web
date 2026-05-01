@@ -101,6 +101,10 @@ export default async function handler(req, res) {
     }
   }
 
+  // 3.5) Migration: eski kategori isimleri → yeni (Arazi, Konut, Bağevi, Ticari)
+  await sql`UPDATE properties SET category = 'arazi' WHERE category IN ('arsa', 'tarla')`;
+  await sql`UPDATE properties SET category = 'bagevi' WHERE category = 'bag'`;
+
   // 4) Seed articles (sadece articles tablosu boşsa)
   const artCount = await sql`SELECT COUNT(*)::int AS n FROM articles`;
   let articlesSeeded = 0;
@@ -129,7 +133,7 @@ export default async function handler(req, res) {
 
 const SEED_PROPERTIES = [
   {
-    slug: 'sahile-400-m-imarli-yatirimlik-arsa', category: 'arsa', tag: 'Deniz Manzaralı Arsa',
+    slug: 'sahile-400-m-imarli-yatirimlik-arsa', category: 'arazi', tag: 'Deniz Manzaralı Arsa',
     location: 'Yalova · Çınarcık', title: 'Sahile 400 m, imarlı yatırımlık arsa',
     description: 'Konut imarlı, deniz cepheli, yola sıfır parsel. Bölgenin gelişim aksında, kısa vadede yüksek değer artışı potansiyeli.',
     price: 4250000, area: '1.840 m²',
@@ -139,7 +143,7 @@ const SEED_PROPERTIES = [
     featured: true,
   },
   {
-    slug: 'gol-manzarali-hobi-bahcesi-tarla', category: 'tarla', tag: 'Yatırımlık Tarla',
+    slug: 'gol-manzarali-hobi-bahcesi-tarla', category: 'arazi', tag: 'Yatırımlık Tarla',
     location: 'Sakarya · Sapanca · Kırkpınar', title: 'Göl manzaralı, hobi bahçesi tarla',
     description: 'Kırkpınar bölgesinde, göl ve orman manzaralı, ulaşımı kolay tarla. Hobi bahçesi ve orta vadeli imar potansiyeli için ideal.',
     price: 2850000, area: '3.250 m²',
@@ -149,7 +153,7 @@ const SEED_PROPERTIES = [
     featured: true,
   },
   {
-    slug: 'iznik-golu-manzarali-bag-evi-arsasi', category: 'bag', tag: 'Bağ Evi Arazisi',
+    slug: 'iznik-golu-manzarali-bag-evi-arsasi', category: 'bagevi', tag: 'Bağ Evi Arazisi',
     location: 'Bursa · İznik', title: 'İznik Gölü manzaralı bağ evi arsası',
     description: "Tarihi İznik'te, göl manzaralı, bağ evi yapımına uygun, elektrik ve su altyapısı hazır parsel. Hafta sonu kaçışı ve kira getirisi.",
     price: 1950000, area: '2.100 m²',
@@ -159,7 +163,7 @@ const SEED_PROPERTIES = [
     featured: true,
   },
   {
-    slug: 'geyikliye-5-dk-hizla-degerlenen-bolge', category: 'arsa', tag: 'Sahile Yakın Arsa',
+    slug: 'geyikliye-5-dk-hizla-degerlenen-bolge', category: 'arazi', tag: 'Sahile Yakın Arsa',
     location: 'Çanakkale · Ezine', title: "Geyikli'ye 5 dk, hızla değerlenen bölge",
     description: 'Yeni imar planına dahil, hızla gelişen turizm aksında, sahile 1.2 km mesafede yatırım fırsatı. Erken alım avantajı.',
     price: 3400000, area: '2.760 m²',
@@ -189,7 +193,7 @@ const SEED_PROPERTIES = [
     featured: false,
   },
   {
-    slug: 'saroz-korfezine-12-km-gelisim-aksinda-arsa', category: 'arsa', tag: 'Sınır Bölgesi Arsa',
+    slug: 'saroz-korfezine-12-km-gelisim-aksinda-arsa', category: 'arazi', tag: 'Sınır Bölgesi Arsa',
     location: 'Edirne · Keşan', title: "Saroz Körfezi'ne 12 km, gelişim aksında arsa",
     description: 'Yeni yapılan otoyola yakın, turizm bölgesi sınırında, parsel toplama avantajı. Uzun vadeli yatırım için cazip.',
     price: 1450000, area: '4.500 m²',
@@ -199,7 +203,7 @@ const SEED_PROPERTIES = [
     featured: false,
   },
   {
-    slug: 'verimli-sulanan-320-agacli-zeytinlik', category: 'tarla', tag: 'Verimli Zeytinlik',
+    slug: 'verimli-sulanan-320-agacli-zeytinlik', category: 'arazi', tag: 'Verimli Zeytinlik',
     location: 'Manisa · Akhisar', title: 'Verimli, sulanan, 320 ağaçlı zeytinlik',
     description: 'Ekonomik ömrü uzun, organik yetiştirilmiş 320 zeytin ağacı bulunan, su kuyusu hazır verimli arazi.',
     price: 2200000, area: '5.800 m²',
