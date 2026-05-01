@@ -617,14 +617,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
 .hero-visual-overlay {
   position: absolute;
-  bottom: 24px; left: 24px; right: 24px;
+  bottom: 28px; left: 28px; right: 28px;
   z-index: 2;
   padding: 22px 26px;
-  border-radius: var(--radius);
-  background: #FFFCF3;
-  border: 1px solid rgba(168, 122, 46, 0.5);
-  box-shadow: 0 18px 48px rgba(74, 53, 16, 0.50),
-              0 4px 12px rgba(0, 0, 0, 0.30);
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid rgba(168, 122, 46, 0.25);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35),
+              0 8px 20px rgba(0, 0, 0, 0.20),
+              0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  isolation: isolate;
 }
 .hero-visual-overlay .label {
   font-size: 11px;
@@ -650,7 +652,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   align-items: center;
   font-weight: 600;
 }
-.hero-visual-overlay .meta span[style*="text-ghost"] { color: rgba(139, 111, 56, 0.6) !important; }
+.hero-visual-overlay .meta span[style*="text-ghost"] { color: rgba(139, 111, 56, 0.55) !important; }
 .hero-visual-overlay .meta span[style*="--gold"] { color: #8B6F38 !important; font-weight: 800; }
 
 /* hero floating compass mark */
