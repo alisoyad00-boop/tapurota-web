@@ -620,16 +620,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   z-index: 2;
   padding: 24px;
   border-radius: var(--radius);
-  background: rgba(16, 13, 11, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
+  background: rgba(10, 7, 4, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(232, 199, 122, 0.35);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
 }
 .hero-visual-overlay .label {
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: #F5D98A;
   margin-bottom: 10px;
   display: block;
 }
@@ -638,14 +639,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-size: 22px;
   font-weight: 500;
   line-height: 1.2;
-  color: #FBF7EE;
-  margin-bottom: 6px;
+  color: #FFFFFF;
+  margin-bottom: 8px;
 }
 .hero-visual-overlay .meta {
-  font-size: 12px;
-  color: #C8BDA8;
+  font-size: 13px;
+  color: #F0E8D5;
   display: flex; gap: 14px;
+  align-items: center;
 }
+.hero-visual-overlay .meta span[style*="text-ghost"] { color: rgba(245, 217, 138, 0.4) !important; }
+.hero-visual-overlay .meta span[style*="--gold"] { color: #F5D98A !important; font-weight: 600; }
 
 /* hero floating compass mark */
 .hero-mark {
