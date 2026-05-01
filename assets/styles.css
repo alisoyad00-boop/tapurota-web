@@ -701,28 +701,40 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   gap: 36px;
 }
 
-/* Anasayfa "Öne çıkan" grid — kompakt 3 sütun */
-#featured-grid {
+/* Kompakt 3 sütun grid — anasayfa "Öne çıkan" + gayrimenkuller listesi */
+#featured-grid,
+#property-grid {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-#featured-grid .property-media { aspect-ratio: 16 / 11; }
-#featured-grid .property-body { padding: 18px 20px 20px; }
-#featured-grid .h-card { font-size: 18px; line-height: 1.25; }
-#featured-grid .property-meta { gap: 14px; padding-top: 14px; margin-top: 14px; }
-#featured-grid .property-meta-item .key { font-size: 9px; }
-#featured-grid .property-meta-item .val { font-size: 13px; }
-#featured-grid p { font-size: 13px; line-height: 1.5; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
-#featured-grid .property-tag { font-size: 10px; padding: 5px 10px; top: 12px; left: 12px; }
-#featured-grid .property-price { font-size: 12px; padding: 6px 11px; top: 12px; right: 12px; }
-#featured-grid .property-link { font-size: 11.5px; padding-top: 12px; }
+#featured-grid .property-media,
+#property-grid .property-media { aspect-ratio: 16 / 11; }
+#featured-grid .property-body,
+#property-grid .property-body { padding: 18px 20px 20px; }
+#featured-grid .h-card,
+#property-grid .h-card { font-size: 18px; line-height: 1.25; }
+#featured-grid .property-meta,
+#property-grid .property-meta { gap: 14px; padding-top: 14px; margin-top: 14px; }
+#featured-grid .property-meta-item .key,
+#property-grid .property-meta-item .key { font-size: 9px; }
+#featured-grid .property-meta-item .val,
+#property-grid .property-meta-item .val { font-size: 13px; }
+#featured-grid p,
+#property-grid p { font-size: 13px; line-height: 1.5; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+#featured-grid .property-tag,
+#property-grid .property-tag { font-size: 10px; padding: 5px 10px; top: 12px; left: 12px; }
+#featured-grid .property-price,
+#property-grid .property-price { font-size: 12px; padding: 6px 11px; top: 12px; right: 12px; }
+#featured-grid .property-link,
+#property-grid .property-link { font-size: 11.5px; padding-top: 12px; }
 
 @media (max-width: 900px) {
-  #featured-grid { grid-template-columns: repeat(2, 1fr); }
+  #featured-grid, #property-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
-  #featured-grid { grid-template-columns: 1fr; gap: 18px; }
-  #featured-grid .property-media { aspect-ratio: 16 / 10; }
+  #featured-grid, #property-grid { grid-template-columns: 1fr; gap: 18px; }
+  #featured-grid .property-media,
+  #property-grid .property-media { aspect-ratio: 16 / 10; }
 }
 .property-card {
   position: relative;

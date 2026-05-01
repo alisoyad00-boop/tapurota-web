@@ -4,18 +4,28 @@ const LOGO_SVG = `
 <svg viewBox="0 0 400 400" class="nav-brand-mark" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <defs>
     <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F5D98A"/>
-      <stop offset="50%" stop-color="#D4AF6A"/>
-      <stop offset="100%" stop-color="#9A7A4A"/>
+      <stop offset="0%" stop-color="#FFE6A8"/>
+      <stop offset="55%" stop-color="#E5C27A"/>
+      <stop offset="100%" stop-color="#C9A464"/>
     </linearGradient>
+    <radialGradient id="navGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F5D98A" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F5D98A" stop-opacity="0"/>
+    </radialGradient>
   </defs>
-  <circle cx="200" cy="200" r="180" fill="none" stroke="url(#navGold)" stroke-width="6"/>
-  <circle cx="200" cy="200" r="155" fill="none" stroke="url(#navGold)" stroke-width="2"/>
+  <circle cx="200" cy="200" r="195" fill="url(#navGlow)"/>
+  <circle cx="200" cy="200" r="180" fill="none" stroke="url(#navGold)" stroke-width="14"/>
+  <circle cx="200" cy="200" r="155" fill="none" stroke="url(#navGold)" stroke-width="3.5"/>
   <g transform="translate(200,200)">
-    <path d="M -55,-15 L 0,-70 L 55,-15 L 55,55 L -55,55 Z" fill="none" stroke="url(#navGold)" stroke-width="6" stroke-linejoin="round"/>
-    <circle cx="0" cy="20" r="22" fill="none" stroke="url(#navGold)" stroke-width="3.5"/>
-    <path d="M 0,2 L 7,20 L 0,38 L -7,20 Z" fill="url(#navGold)"/>
-    <circle cx="0" cy="20" r="2.2" fill="#F5D98A"/>
+    <path d="M -55,-15 L 0,-70 L 55,-15 L 55,55 L -55,55 Z"
+          fill="url(#navGold)"
+          stroke="url(#navGold)"
+          stroke-width="6"
+          stroke-linejoin="round"
+          opacity="0.95"/>
+    <circle cx="0" cy="20" r="22" fill="#0A0807" stroke="#FFE6A8" stroke-width="4"/>
+    <path d="M 0,2 L 8,20 L 0,38 L -8,20 Z" fill="#FFE6A8"/>
+    <circle cx="0" cy="20" r="3" fill="#0A0807"/>
   </g>
 </svg>`;
 
