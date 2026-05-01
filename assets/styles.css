@@ -221,16 +221,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--text-strong);
 }
 .nav-brand-mark {
-  width: 38px;
-  height: 38px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
 }
 .nav-brand-text { line-height: 1; }
@@ -238,10 +238,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   display: block;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 9px;
-  letter-spacing: 0.28em;
+  font-size: 10.5px;
+  letter-spacing: 0.26em;
   color: var(--gold);
-  margin-top: 4px;
+  margin-top: 5px;
   text-transform: uppercase;
 }
 
@@ -699,6 +699,26 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 36px;
+}
+
+/* Anasayfa "Öne çıkan" grid — daha kompakt (3 sütun, küçük kartlar) */
+#featured-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+#featured-grid .property-media { aspect-ratio: 4 / 3; }
+#featured-grid .property-body { padding: 22px 24px 24px; }
+#featured-grid .h-card { font-size: 21px; line-height: 1.25; }
+#featured-grid .property-meta { gap: 18px; padding-top: 16px; margin-top: 16px; }
+#featured-grid .property-meta-item .val { font-size: 14px; }
+#featured-grid p { font-size: 14px; line-height: 1.55; }
+
+@media (max-width: 1100px) {
+  #featured-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  #featured-grid { grid-template-columns: 1fr; gap: 20px; }
+  #featured-grid .property-media { aspect-ratio: 16 / 11; }
 }
 .property-card {
   position: relative;

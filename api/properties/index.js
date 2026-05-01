@@ -21,7 +21,7 @@ async function list(req, res) {
   } else if (category) {
     rows = await sql`SELECT * FROM properties WHERE published = TRUE AND category = ${category} ORDER BY created_at DESC`;
   } else if (featured === '1') {
-    rows = await sql`SELECT * FROM properties WHERE published = TRUE AND featured = TRUE ORDER BY created_at DESC LIMIT 4`;
+    rows = await sql`SELECT * FROM properties WHERE published = TRUE AND featured = TRUE ORDER BY created_at DESC LIMIT 9`;
   } else if (includeUnpublished) {
     // Admin-only: return everything
     const session = await requireAdmin(req, res);
