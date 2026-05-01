@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>İlanlar — Tapu Rota Admin</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logo.svg" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+  <div class="adm-top">
+    <div class="adm-brand">
+      <span class="dot"></span>
+      <div>
+        <div>Tapu Rota</div>
+        <small>Yönetim Paneli</small>
+      </div>
+    </div>
+    <div class="adm-top-right">
+      <span class="adm-user" id="user-label">…</span>
+      <a href="/" class="btn btn-sm" target="_blank">Siteyi Görüntüle ↗</a>
+      <button class="btn btn-sm" id="logout-btn">Çıkış</button>
+    </div>
+  </div>
+
+  <div class="adm-wrap">
+    <div class="adm-head">
+      <div>
+        <h1>İlanlar</h1>
+        <p id="count-label">Yükleniyor…</p>
+      </div>
+      <a href="/admin/edit" class="btn btn-gold">+ Yeni İlan Ekle</a>
+    </div>
+
+    <div id="list-slot">
+      <div class="card empty"><span class="spinner"></span></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { api, ensureAuth, escapeHtml, formatPrice, toast } from '/admin/admin.js';
+
+    const user = await ensureAuth();
+    if (!user) { /* redirected */ } else {
+      document.getElementById('user-label').textContent = user.username;
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await api('/api/auth/logout', { method: 'POST' });
+      location.href = '/admin/login';
+    });
+
+    async function load() {
+      const slot = document.getElementById('list-slot');
+      try {
+        const { properties } = await api('/api/properties?all=1');
+        document.getElementById('count-label').textContent = `${properties.length} ilan`;
+        if (!properties.length) {
+          slot.innerHTML = `
+            <div class="card empty">
+              <h2>Henüz ilan yok</h2>
+              <p>İlk ilanı eklemek için yukarıdaki butona bas.</p>
+            </div>`;
+          return;
+        }
+        slot.innerHTML = '<div class="prop-list">' + properties.map(renderRow).join('') + '</div>';
+        slot.querySelectorAll('[data-delete]').forEach((btn) => {
+          btn.addEventListener('click', () => removeOne(btn.dataset.delete, btn.dataset.title));
+        });
+      } catch (err) {
+        slot.innerHTML = `<div class="card"><div class="alert">${err.message}</div></div>`;
+      }
+    }
+
+    function renderRow(p) {
+      const cover = p.cover || (p.images && p.images[0]) || '';
+      const pills = [];
+      if (p.featured) pills.push('<span class="pill featured">Öne Çıkan</span>');
+      if (!p.published) pills.push('<span class="pill unpub">Taslak</span>');
+      return `
+        <div class="prop-row">
+          <div class="thumb" style="background-image: url('${escapeHtml(cover)}')"></div>
+          <div class="info">
+            <div class="t">${escapeHtml(p.title)}</div>
+            <div class="l">${escapeHtml(p.location)} · ${escapeHtml(p.area || '')}</div>
+          </div>
+          <div>${pills.join(' ')}</div>
+          <div class="price">${formatPrice(p.price)}</div>
+          <div class="actions">
+            <a class="btn btn-sm" href="/admin/edit?id=${p.id}">Düzenle</a>
+            <button class="btn btn-sm btn-danger" data-delete="${p.id}" data-title="${escapeHtml(p.title)}">Sil</button>
+          </div>
+        </div>`;
+    }
+
+    async function removeOne(id, title) {
+      if (!confirm(`"${title}" ilanı silinecek. Emin misin?`)) return;
+      try {
+        await api(`/api/properties/${id}`, { method: 'DELETE' });
+        toast('İlan silindi.', 'success');
+        load();
+      } catch (err) {
+        toast(err.message, 'error');
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

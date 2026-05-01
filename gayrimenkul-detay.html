@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yalova Çınarcık Sahil Arsası — Tapu Rota</title>
-  <meta name="description" content="Yalova Çınarcık'ta sahile 400 m, konut imarlı, müstakil tapulu, deniz cepheli yatırımlık arsa." />
+  <title>İlan Detayı — Tapu Rota</title>
+  <meta name="description" content="Tapu Rota gayrimenkul ilanı detayları." />
   <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -19,34 +19,24 @@
         <span class="sep">/</span>
         <a href="gayrimenkuller.html">Gayrimenkuller</a>
         <span class="sep">/</span>
-        <span style="color:var(--gold)">Yalova Çınarcık Sahil Arsası</span>
+        <span style="color:var(--gold)" id="d-breadcrumb">…</span>
       </nav>
 
       <div class="detail-meta-top">
-        <span class="pill">Deniz Manzaralı Arsa</span>
-        <span>İlan No: TR-1284</span>
-        <span style="color:var(--text-ghost)">·</span>
-        <span>Yayın: 12 Nisan 2026</span>
+        <span class="pill" id="d-tag" style="display:none"></span>
+        <span id="d-listno"></span>
       </div>
 
-      <h1 class="detail-title">Sahile 400 m, imarlı yatırımlık arsa</h1>
-      <div class="detail-loc">
+      <h1 class="detail-title" id="d-title">Yükleniyor…</h1>
+      <div class="detail-loc" id="d-loc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-7.5 8-13a8 8 0 1 0-16 0c0 5.5 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        Yalova · Çınarcık · Şenköy Mevkii
+        <span></span>
       </div>
     </div>
 
-    <!-- Gallery -->
+    <!-- Gallery (dinamik) -->
     <div class="container">
-      <div class="detail-gallery">
-        <div class="main">
-          <img src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=1200&h=900&fit=crop&q=80&auto=format" alt="Arsa ana görsel" />
-        </div>
-        <div class="stack">
-          <div><img src="https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=700&h=520&fit=crop&q=80&auto=format" alt="Arsa görsel 2" /></div>
-          <div><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=700&h=520&fit=crop&q=80&auto=format" alt="Arsa görsel 3" /></div>
-        </div>
-      </div>
+      <div class="detail-gallery" id="d-gallery"></div>
     </div>
   </section>
 
@@ -56,68 +46,30 @@
 
         <!-- Content -->
         <div class="detail-content">
-          <h2>Arsa Hakkında</h2>
-          <p>
-            Yalova Çınarcık Şenköy Mevkii'nde bulunan 1.840 m² parsel; konut imarlı,
-            yola sıfır cephe ve sahile sadece 400 metre yürüme mesafesinde konumlanmaktadır.
-            Bölgedeki gelişim aksı, son 3 yılda %42 değer artışı kaydetmiş, yeni yapılaşma
-            izinleri ile birlikte yatırım potansiyeli güçlü şekilde sürmektedir.
-          </p>
-          <p>
-            Parselin müstakil tapusu mevcut, üzerinde herhangi bir takyidat yer almamaktadır.
-            Elektrik ve su altyapısı yola gelmiş durumda olup; doğalgaz hattı 2026 ikinci
-            yarısında bölgeye ulaştırılacaktır. Konut imarı, bahçeli müstakil ev ya da küçük
-            bir villa projesi için elverişli yapılaşma şartları sunar.
-          </p>
+          <div id="d-description-block" style="display:none">
+            <h2>İlan Hakkında</h2>
+            <p id="d-description"></p>
+          </div>
 
-          <h2>Öne Çıkan Özellikler</h2>
-          <ul class="detail-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Konut imarlı, %30 KAKS</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sahile 400 m yürüme mesafesi</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Yola sıfır, deniz cephesi</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Müstakil tapu, takyidatsız</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Elektrik & su hazır</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Düz topografya, kayasız zemin</li>
-          </ul>
-
-          <h2>Bölge Analizi</h2>
-          <p>
-            Çınarcık, İstanbul'a feribot ile 1 saat mesafede, son yıllarda butik turizm ve
-            yazlık konut yatırımlarıyla öne çıkan bir bölgedir. Şenköy Mevkii, sahil aksında
-            görece az yapılaşmış, manzaraya hâkim bir konum sunar. Bölgedeki ortalama m²
-            satış fiyatı son 12 ayda %18, son 3 yılda ise %42 artış göstermiştir.
-          </p>
-          <p>
-            Yeni planlanan sahil yolu yenileme projesi ve marina genişletmesi, parselin
-            doğrudan değerini olumlu etkileyecek lokasyonel avantajlardır.
-          </p>
-
-          <h2>Ulaşım & Çevre</h2>
-          <p>
-            Çınarcık merkez 6 km · Yalova merkez 22 km · İstanbul (feribot ile) 1 saat ·
-            Yalova hızlı tren projesi (2027) ile İstanbul-Yalova bağlantısı 35 dk'ya
-            inecektir. Marketler, sağlık ocağı ve ilköğretim okulu 1 km içerisindedir.
-          </p>
+          <div id="d-features-block" style="display:none">
+            <h2>İlan Bilgileri</h2>
+            <ul class="detail-features" id="d-features"></ul>
+          </div>
         </div>
 
         <!-- Sticky side -->
         <aside class="detail-side">
           <span class="price-label">Liste Fiyatı</span>
-          <div class="price">₺ 4.250.000</div>
-          <div class="price-sub">m² fiyatı: ₺ 2.310 · Pazarlık payı mevcut</div>
+          <div class="price" id="d-price">—</div>
+          <div class="price-sub" id="d-price-sub" style="display:none"></div>
 
-          <div class="detail-spec"><span class="k">Alan</span><span class="v">1.840 m²</span></div>
-          <div class="detail-spec"><span class="k">İmar</span><span class="v">Konut · %30 KAKS</span></div>
-          <div class="detail-spec"><span class="k">Tapu</span><span class="v">Müstakil</span></div>
-          <div class="detail-spec"><span class="k">Cephe</span><span class="v">Yola sıfır</span></div>
-          <div class="detail-spec"><span class="k">Manzara</span><span class="v">Deniz</span></div>
-          <div class="detail-spec"><span class="k">Topografya</span><span class="v">Düz</span></div>
+          <div id="d-specs"></div>
 
           <a href="iletisim.html" class="btn btn-gold">
             Yetkiliyle Görüş
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
-          <a href="https://wa.me/905323307430" class="btn btn-ghost">WhatsApp</a>
+          <a href="https://wa.me/905323307430" class="btn btn-ghost" id="d-whatsapp">WhatsApp</a>
 
           <div style="margin-top:28px; padding-top:24px; border-top:1px solid var(--border); display:flex; gap:14px; align-items:start;">
             <div style="width:46px; height:46px; flex-shrink:0; border-radius:50%; background: linear-gradient(135deg, var(--gold-pale), var(--gold-deep)); display:flex; align-items:center; justify-content:center; color:#1A1208; font-family:var(--font-display); font-weight:600;">ER</div>
@@ -133,71 +85,123 @@
   </section>
 
   <!-- Similar properties -->
-  <section class="section" style="padding-top:0">
+  <section class="section" style="padding-top:0" id="d-similar-section" style="display:none">
     <div class="container">
       <div class="section-head">
         <div class="label-col">
           <span class="eyebrow">Benzer Fırsatlar</span>
-          <h2 class="h-section">Aynı bölgede,<br/><em>farklı seçenekler</em></h2>
+          <h2 class="h-section">Benzer<br/><em>seçenekler</em></h2>
         </div>
         <div class="text-col">
           <p class="lead">
-            İlgilendiğiniz bölgeye yakın, benzer profilde başka portföy önerileri.
+            İlgilendiğiniz bölgeye yakın, benzer profilde portföy önerileri.
           </p>
         </div>
       </div>
 
-      <div class="property-grid">
-        <article class="property-card">
-          <div class="property-media">
-            <img src="https://picsum.photos/seed/sapanca-tarla/900/620" alt="Sapanca tarla" />
-            <span class="property-tag">Yatırımlık Tarla</span>
-            <span class="property-price">₺ 2.850.000</span>
-          </div>
-          <div class="property-body">
-            <div class="property-loc">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-7.5 8-13a8 8 0 1 0-16 0c0 5.5 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Sakarya · Sapanca
-            </div>
-            <h3 class="h-card">Göl manzaralı, hobi bahçesi tarla</h3>
-            <p>Kırkpınar bölgesinde göl manzaralı, ulaşımı kolay tarla.</p>
-            <div class="property-meta">
-              <div class="property-meta-item"><span class="key">Alan</span><span class="val">3.250 m²</span></div>
-              <div class="property-meta-item"><span class="key">Vasıf</span><span class="val">Tarla</span></div>
-            </div>
-            <a href="gayrimenkul-detay.html" class="property-link">Detayları İncele
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="property-card">
-          <div class="property-media">
-            <img src="https://picsum.photos/seed/iznik-bag/900/620" alt="İznik bağ" />
-            <span class="property-tag">Bağ Evi Arazisi</span>
-            <span class="property-price">₺ 1.950.000</span>
-          </div>
-          <div class="property-body">
-            <div class="property-loc">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-7.5 8-13a8 8 0 1 0-16 0c0 5.5 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Bursa · İznik
-            </div>
-            <h3 class="h-card">İznik Gölü manzaralı bağ evi arsası</h3>
-            <p>Bağ evi yapımına uygun, altyapısı hazır parsel.</p>
-            <div class="property-meta">
-              <div class="property-meta-item"><span class="key">Alan</span><span class="val">2.100 m²</span></div>
-              <div class="property-meta-item"><span class="key">Vasıf</span><span class="val">Bağ</span></div>
-            </div>
-            <a href="gayrimenkul-detay.html" class="property-link">Detayları İncele
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
-      </div>
+      <div class="property-grid" id="d-similar-grid"></div>
     </div>
   </section>
 
   <div id="footer-mount"></div>
   <script src="assets/partials.js"></script>
+  <script type="module">
+    import { loadDetail, esc, fmtPrice, renderCard } from '/assets/properties.js';
+
+    const titleEl = document.getElementById('d-title');
+    const detail = await loadDetail(document.querySelector('.detail-body') || titleEl);
+    if (!detail) {
+      titleEl.textContent = 'İlan bulunamadı';
+      document.title = 'İlan bulunamadı — Tapu Rota';
+    } else {
+      const cover = detail.cover || (detail.images && detail.images[0]) || '';
+      const otherImages = (detail.images || []).filter((u) => u !== cover);
+
+      // Title + breadcrumb + location
+      titleEl.textContent = detail.title;
+      document.title = `${detail.title} — Tapu Rota`;
+      document.querySelector('meta[name=description]').setAttribute('content', detail.description?.slice(0, 160) || detail.title);
+      document.getElementById('d-breadcrumb').textContent = detail.title;
+      document.getElementById('d-loc').querySelector('span').textContent = detail.location;
+
+      // Tag + listing number
+      if (detail.tag) {
+        const tagEl = document.getElementById('d-tag');
+        tagEl.textContent = detail.tag;
+        tagEl.style.display = '';
+      }
+      document.getElementById('d-listno').textContent = `İlan No: TR-${String(detail.id).padStart(4, '0')}`;
+
+      // Gallery
+      const gal = document.getElementById('d-gallery');
+      if (cover || otherImages.length) {
+        gal.innerHTML = `
+          <div class="main">
+            ${cover ? `<img src="${esc(cover)}" alt="${esc(detail.title)}" />` : ''}
+          </div>
+          ${otherImages.length ? `
+            <div class="stack">
+              ${otherImages.slice(0, 2).map((u) => `<div><img src="${esc(u)}" alt="" /></div>`).join('')}
+            </div>` : ''}
+        `;
+      } else {
+        gal.style.display = 'none';
+      }
+
+      // Description
+      if (detail.description) {
+        document.getElementById('d-description-block').style.display = '';
+        document.getElementById('d-description').textContent = detail.description;
+      }
+
+      // Meta features
+      const metaEntries = Object.entries(detail.meta || {});
+      if (metaEntries.length || detail.area) {
+        const block = document.getElementById('d-features-block');
+        const ul = document.getElementById('d-features');
+        const items = [];
+        if (detail.area) items.push(`Alan: ${detail.area}`);
+        for (const [k, v] of metaEntries) items.push(`${k}: ${v}`);
+        ul.innerHTML = items.map((t) => `
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${esc(t)}</li>
+        `).join('');
+        block.style.display = '';
+      }
+
+      // Sidebar — price + specs
+      document.getElementById('d-price').textContent = fmtPrice(detail.price) || '—';
+      if (detail.area && detail.price) {
+        const num = Number(String(detail.area).replace(/[^\d]/g, ''));
+        if (num > 0) {
+          const m2 = Math.round(detail.price / num);
+          document.getElementById('d-price-sub').textContent = `m² fiyatı: ₺ ${m2.toLocaleString('tr-TR')}`;
+          document.getElementById('d-price-sub').style.display = '';
+        }
+      }
+      const specs = document.getElementById('d-specs');
+      const specRows = [];
+      if (detail.area) specRows.push(['Alan', detail.area]);
+      for (const [k, v] of metaEntries) specRows.push([k, v]);
+      if (detail.tag) specRows.push(['Tip', detail.tag]);
+      specs.innerHTML = specRows.map(([k, v]) => `
+        <div class="detail-spec"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>
+      `).join('');
+
+      // WhatsApp prefill
+      const waText = encodeURIComponent(`Merhaba, "${detail.title}" ilanı hakkında bilgi almak istiyorum.`);
+      document.getElementById('d-whatsapp').href = `https://wa.me/905323307430?text=${waText}`;
+
+      // Similar
+      try {
+        const r = await fetch(`/api/properties?category=${encodeURIComponent(detail.category)}`);
+        const data = await r.json();
+        const similar = (data.properties || []).filter((p) => p.id !== detail.id).slice(0, 2);
+        if (similar.length) {
+          document.getElementById('d-similar-section').style.removeProperty('display');
+          document.getElementById('d-similar-grid').innerHTML = similar.map(renderCard).join('');
+        }
+      } catch {}
+    }
+  </script>
 </body>
 </html>

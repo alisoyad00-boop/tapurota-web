@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>İlan Düzenle — Tapu Rota Admin</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logo.svg" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+  <div class="adm-top">
+    <div class="adm-brand">
+      <span class="dot"></span>
+      <div>
+        <div>Tapu Rota</div>
+        <small>Yönetim Paneli</small>
+      </div>
+    </div>
+    <div class="adm-top-right">
+      <a href="/admin/" class="btn btn-sm">← Listeye Dön</a>
+    </div>
+  </div>
+
+  <div class="adm-wrap">
+    <div class="adm-head">
+      <div>
+        <h1 id="page-title">Yeni İlan</h1>
+        <p id="page-sub">İlan bilgilerini doldur ve kaydet.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-danger" id="delete-btn" style="display:none">Sil</button>
+        <button class="btn btn-gold" id="save-btn">Kaydet</button>
+      </div>
+    </div>
+
+    <div id="alert-slot"></div>
+
+    <form id="form" class="card" autocomplete="off">
+      <div class="form-grid">
+        <div class="field full">
+          <label for="title">Başlık *</label>
+          <input id="title" type="text" required maxlength="200" placeholder="örn. Sahile 400 m, imarlı yatırımlık arsa" />
+        </div>
+
+        <div class="field">
+          <label for="category">Kategori *</label>
+          <select id="category" required>
+            <option value="arsa">Arsa</option>
+            <option value="tarla">Tarla</option>
+            <option value="bag">Bağ Evi</option>
+            <option value="konut">Konut</option>
+            <option value="ticari">Ticari</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tag">Etiket</label>
+          <input id="tag" type="text" maxlength="60" placeholder="örn. Deniz Manzaralı Arsa" />
+          <span class="hint">Kart üstünde sol köşede çıkar.</span>
+        </div>
+
+        <div class="field full">
+          <label for="location">Konum *</label>
+          <input id="location" type="text" required maxlength="120" placeholder="örn. Yalova · Çınarcık" />
+        </div>
+
+        <div class="field full">
+          <label for="description">Açıklama</label>
+          <textarea id="description" maxlength="2000" placeholder="İlanın detaylı açıklaması..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="price">Fiyat (₺)</label>
+          <input id="price" type="number" min="0" step="1" placeholder="örn. 4250000" />
+          <span class="hint">Sadece sayı, virgül-nokta yok.</span>
+        </div>
+
+        <div class="field">
+          <label for="area">Alan</label>
+          <input id="area" type="text" maxlength="40" placeholder="örn. 1.840 m²" />
+        </div>
+
+        <div class="field full">
+          <label>Detay Bilgileri</label>
+          <div class="meta-list" id="meta-list"></div>
+          <button type="button" class="btn btn-sm" id="add-meta" style="align-self: flex-start; margin-top: 6px;">+ Detay Ekle</button>
+          <span class="hint">Örn: İmar = Konut, Tapu = Müstakil, Vasıf = Tarla. Karta çıkar.</span>
+        </div>
+
+        <div class="field full">
+          <label>Fotoğraflar</label>
+          <div class="img-grid" id="img-grid"></div>
+          <span class="hint">İlk fotoğraf otomatik kapak olur. Birden fazla seçebilirsin. Görsel başına max 4 MB.</span>
+        </div>
+
+        <div class="field">
+          <div class="checkbox-row">
+            <input id="featured" type="checkbox" />
+            <label for="featured">Anasayfada öne çıkan</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="checkbox-row">
+            <input id="published" type="checkbox" checked />
+            <label for="published">Yayında (kapatırsan adam göremez)</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { api, ensureAuth, escapeHtml, toast, uploadFile, deleteUploaded } from '/admin/admin.js';
+
+    const user = await ensureAuth();
+    if (!user) { /* redirected */ }
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    const isEdit = !!id;
+
+    if (isEdit) {
+      document.getElementById('page-title').textContent = 'İlan Düzenle';
+      document.getElementById('delete-btn').style.display = 'inline-flex';
+    }
+
+    /* State */
+    let images = [];      // [{ url, isCover }]
+    let coverIdx = 0;
+    let metaItems = [];   // [{ k, v }]
+
+    /* Image rendering */
+    function renderImages() {
+      const grid = document.getElementById('img-grid');
+      const items = images.map((im, i) => `
+        <div class="img-card ${i === coverIdx ? 'cover' : ''}" data-idx="${i}">
+          <img src="${escapeHtml(im.url)}" alt="" />
+          <div class="overlay">
+            ${i === coverIdx ? '<span class="badge">Kapak</span>' : `<button type="button" class="icon-btn" data-action="cover" data-idx="${i}" title="Kapak yap">★</button>`}
+            <button type="button" class="icon-btn" data-action="del" data-idx="${i}" title="Sil">×</button>
+          </div>
+        </div>
+      `).join('');
+      const adder = `
+        <label class="img-add">
+          <span style="font-size:24px;">+</span>
+          <span>Fotoğraf ekle</span>
+          <input type="file" accept="image/*" multiple id="file-input" />
+        </label>`;
+      grid.innerHTML = items + adder;
+
+      grid.querySelectorAll('[data-action="cover"]').forEach((b) => b.addEventListener('click', () => { coverIdx = +b.dataset.idx; renderImages(); }));
+      grid.querySelectorAll('[data-action="del"]').forEach((b) => b.addEventListener('click', () => removeImage(+b.dataset.idx)));
+      grid.querySelector('#file-input').addEventListener('change', handleFiles);
+    }
+
+    async function handleFiles(e) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      for (const f of files) {
+        if (!f.type.startsWith('image/')) { toast(`${f.name}: resim değil, atlandı`, 'error'); continue; }
+        if (f.size > 4 * 1024 * 1024) { toast(`${f.name}: 4MB'ı aşıyor, daha küçük bir görsel kullan`, 'error'); continue; }
+        const placeholder = { url: URL.createObjectURL(f), uploading: true };
+        images.push(placeholder);
+        renderImages();
+        try {
+          const url = await uploadFile(f);
+          const idx = images.indexOf(placeholder);
+          if (idx !== -1) images[idx] = { url };
+          renderImages();
+        } catch (err) {
+          const idx = images.indexOf(placeholder);
+          if (idx !== -1) images.splice(idx, 1);
+          renderImages();
+          toast(`${f.name}: ${err.message}`, 'error');
+        }
+      }
+      e.target.value = '';
+    }
+
+    async function removeImage(idx) {
+      const im = images[idx];
+      if (!im) return;
+      if (!confirm('Fotoğrafı sil?')) return;
+      // Yüklenmiş Blob'sa sil
+      if (im.url && im.url.startsWith('http') && !im.uploading) {
+        deleteUploaded(im.url).catch(() => {});
+      }
+      images.splice(idx, 1);
+      if (coverIdx >= images.length) coverIdx = Math.max(0, images.length - 1);
+      renderImages();
+    }
+
+    /* Meta rendering */
+    function renderMeta() {
+      const list = document.getElementById('meta-list');
+      list.innerHTML = metaItems.map((m, i) => `
+        <div class="meta-row">
+          <input type="text" placeholder="Başlık (örn. İmar)" value="${escapeHtml(m.k)}" data-k="${i}" />
+          <input type="text" placeholder="Değer (örn. Konut)" value="${escapeHtml(m.v)}" data-v="${i}" />
+          <button type="button" class="icon-btn" data-mdel="${i}">×</button>
+        </div>
+      `).join('');
+      list.querySelectorAll('[data-k]').forEach((inp) => inp.addEventListener('input', (e) => { metaItems[+inp.dataset.k].k = e.target.value; }));
+      list.querySelectorAll('[data-v]').forEach((inp) => inp.addEventListener('input', (e) => { metaItems[+inp.dataset.v].v = e.target.value; }));
+      list.querySelectorAll('[data-mdel]').forEach((b) => b.addEventListener('click', () => { metaItems.splice(+b.dataset.mdel, 1); renderMeta(); }));
+    }
+
+    document.getElementById('add-meta').addEventListener('click', () => { metaItems.push({ k: '', v: '' }); renderMeta(); });
+
+    /* Load existing if editing */
+    async function load() {
+      if (!isEdit) {
+        renderImages();
+        renderMeta();
+        return;
+      }
+      try {
+        const { property } = await api(`/api/properties/${id}`);
+        document.getElementById('title').value = property.title || '';
+        document.getElementById('category').value = property.category || 'arsa';
+        document.getElementById('tag').value = property.tag || '';
+        document.getElementById('location').value = property.location || '';
+        document.getElementById('description').value = property.description || '';
+        document.getElementById('price').value = property.price ?? '';
+        document.getElementById('area').value = property.area || '';
+        document.getElementById('featured').checked = !!property.featured;
+        document.getElementById('published').checked = !!property.published;
+        images = (property.images || []).map((url) => ({ url }));
+        coverIdx = property.cover && images.find((i) => i.url === property.cover)
+          ? images.findIndex((i) => i.url === property.cover)
+          : 0;
+        metaItems = Object.entries(property.meta || {}).map(([k, v]) => ({ k, v: String(v) }));
+        renderImages();
+        renderMeta();
+      } catch (err) {
+        document.getElementById('alert-slot').innerHTML = `<div class="alert">${err.message}</div>`;
+      }
+    }
+
+    /* Save */
+    document.getElementById('save-btn').addEventListener('click', async () => {
+      const slot = document.getElementById('alert-slot');
+      slot.innerHTML = '';
+      const btn = document.getElementById('save-btn');
+      btn.disabled = true;
+      const old = btn.textContent;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      const meta = {};
+      for (const m of metaItems) {
+        const k = (m.k || '').trim();
+        const v = (m.v || '').trim();
+        if (k && v) meta[k] = v;
+      }
+
+      const payload = {
+        title:       document.getElementById('title').value.trim(),
+        category:    document.getElementById('category').value,
+        tag:         document.getElementById('tag').value.trim(),
+        location:    document.getElementById('location').value.trim(),
+        description: document.getElementById('description').value.trim(),
+        price:       document.getElementById('price').value ? Number(document.getElementById('price').value) : null,
+        area:        document.getElementById('area').value.trim(),
+        featured:    document.getElementById('featured').checked,
+        published:   document.getElementById('published').checked,
+        meta,
+        images:      images.filter((i) => !i.uploading).map((i) => i.url),
+        cover:       images[coverIdx]?.url || null,
+      };
+
+      try {
+        if (isEdit) {
+          await api(`/api/properties/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+          toast('Kaydedildi.', 'success');
+        } else {
+          const r = await api('/api/properties', { method: 'POST', body: JSON.stringify(payload) });
+          toast('İlan eklendi.', 'success');
+          setTimeout(() => location.href = `/admin/edit?id=${r.property.id}`, 600);
+        }
+      } catch (err) {
+        slot.innerHTML = `<div class="alert">${err.message}</div>`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = old;
+      }
+    });
+
+    /* Delete */
+    document.getElementById('delete-btn').addEventListener('click', async () => {
+      if (!confirm('Bu ilan silinecek. Emin misin?')) return;
+      try {
+        await api(`/api/properties/${id}`, { method: 'DELETE' });
+        toast('İlan silindi.', 'success');
+        setTimeout(() => location.href = '/admin/', 500);
+      } catch (err) {
+        toast(err.message, 'error');
+      }
+    });
+
+    /* Form submit (Enter ile kaydet) */
+    document.getElementById('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('save-btn').click();
+    });
+
+    load();
+  </script>
+</body>
+</html>

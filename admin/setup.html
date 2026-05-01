@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>İlk Kurulum — Tapu Rota Admin</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logo.svg" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+  <div class="login-wrap">
+    <form class="card login-card" id="setup-form" style="max-width: 460px;">
+      <div class="adm-brand" style="margin-bottom: 24px;">
+        <span class="dot"></span>
+        <div>
+          <div>Tapu Rota</div>
+          <small>İlk Kurulum</small>
+        </div>
+      </div>
+      <h1>Hoş geldin.</h1>
+      <p class="sub">DB tablolarını oluşturup ilk admin hesabını yarat. Bu sayfa sadece bir kez kullanılır.</p>
+
+      <div id="alert-slot"></div>
+
+      <div class="field" style="margin-bottom: 14px;">
+        <label for="secret">AUTH_SECRET (Vercel env var değeri)</label>
+        <input id="secret" type="password" required autofocus placeholder="vercel'de tanımladığın AUTH_SECRET" />
+        <span class="hint">Güvenlik için: Vercel Settings → Environment Variables içindeki AUTH_SECRET değerini buraya yapıştır.</span>
+      </div>
+
+      <div class="field" style="margin-bottom: 14px;">
+        <label for="username">Admin Kullanıcı Adı</label>
+        <input id="username" type="text" required value="tapurota" />
+      </div>
+
+      <div class="field" style="margin-bottom: 22px;">
+        <label for="password">Admin Şifresi</label>
+        <input id="password" type="text" required value="rota2023" />
+      </div>
+
+      <button class="btn btn-gold" type="submit" style="width: 100%; justify-content: center;" id="submit-btn">
+        Kurulumu Başlat
+      </button>
+
+      <div id="result-slot" style="margin-top: 20px;"></div>
+    </form>
+  </div>
+
+  <script type="module">
+    const form = document.getElementById('setup-form');
+    const btn  = document.getElementById('submit-btn');
+    const slot = document.getElementById('alert-slot');
+    const out  = document.getElementById('result-slot');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      slot.innerHTML = '';
+      out.innerHTML = '';
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      const payload = {
+        secret:   document.getElementById('secret').value,
+        username: document.getElementById('username').value.trim(),
+        password: document.getElementById('password').value,
+      };
+
+      try {
+        const res = await fetch('/api/setup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+        const lines = [
+          `✓ DB tabloları hazır`,
+          data.admin_created
+            ? `✓ Admin hesabı oluşturuldu (${payload.username} / ${payload.password})`
+            : `⚠ Admin zaten mevcuttu, yeni hesap eklenmedi`,
+          data.properties_seeded > 0
+            ? `✓ ${data.properties_seeded} örnek ilan eklendi`
+            : `· İlanlar tablosunda zaten kayıt vardı`,
+        ];
+        out.innerHTML = `
+          <div class="alert success">
+            ${lines.map((l) => `<div>${l}</div>`).join('')}
+            <div style="margin-top:12px;">
+              <a class="btn btn-gold" href="/admin/login" style="margin-top:8px;">Giriş Sayfasına Git →</a>
+            </div>
+          </div>`;
+        btn.style.display = 'none';
+      } catch (err) {
+        slot.innerHTML = `<div class="alert">${err.message}</div>`;
+        btn.disabled = false;
+        btn.textContent = 'Kurulumu Başlat';
+      }
+    });
+  </script>
+</body>
+</html>

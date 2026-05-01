@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Giriş — Tapu Rota</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logo.svg" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+  <div class="login-wrap">
+    <form class="card login-card" id="login-form">
+      <div class="adm-brand" style="margin-bottom: 24px;">
+        <span class="dot"></span>
+        <div>
+          <div>Tapu Rota</div>
+          <small>Yönetim Paneli</small>
+        </div>
+      </div>
+      <h1>Hoş geldin.</h1>
+      <p class="sub">İlanları yönetmek için giriş yap.</p>
+
+      <div id="alert-slot"></div>
+
+      <div class="field" style="margin-bottom: 14px;">
+        <label for="username">Kullanıcı adı</label>
+        <input id="username" name="username" type="text" autocomplete="username" required autofocus />
+      </div>
+
+      <div class="field" style="margin-bottom: 22px;">
+        <label for="password">Şifre</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+      </div>
+
+      <button class="btn btn-gold" type="submit" style="width: 100%; justify-content: center;" id="submit-btn">
+        Giriş Yap
+      </button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { api, toast } from '/admin/admin.js';
+
+    const form = document.getElementById('login-form');
+    const btn  = document.getElementById('submit-btn');
+    const slot = document.getElementById('alert-slot');
+
+    // Zaten giriş yaptıysa direkt panele gönder
+    api('/api/auth/me').then((r) => {
+      if (r.user) location.href = '/admin/';
+    }).catch(() => {});
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      slot.innerHTML = '';
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>';
+      try {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        await api('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ username, password }),
+        });
+        toast('Hoş geldin!', 'success');
+        setTimeout(() => location.href = '/admin/', 400);
+      } catch (err) {
+        slot.innerHTML = `<div class="alert">${err.message}</div>`;
+        btn.disabled = false;
+        btn.textContent = 'Giriş Yap';
+      }
+    });
+  </script>
+</body>
+</html>

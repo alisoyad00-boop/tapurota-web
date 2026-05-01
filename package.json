@@ -1,0 +1,19 @@
+{
+  "name": "tapurota",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node serve.mjs",
+    "db:init": "node scripts/db-init.mjs",
+    "db:seed": "node scripts/db-seed.mjs",
+    "admin:create": "node scripts/admin-create.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@vercel/blob": "^0.27.0",
+    "bcryptjs": "^2.4.3",
+    "cookie": "^1.0.1",
+    "jose": "^5.9.6"
+  }
+}
