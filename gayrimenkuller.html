@@ -6,7 +6,7 @@
   <title>Gayrimenkuller — Tapu Rota | Arsa, Tarla, Konut & Ticari Yatırım</title>
   <meta name="description" content="Tapu Rota seçili portföyü: yatırımlık arsalar, tarlalar, konutlar ve ticari gayrimenkuller. Bölge analizi ve şeffaf süreçle." />
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HLZP8N3.jpeg" />
-  <link rel="stylesheet" href="assets/styles.css?v=15" />
+  <link rel="stylesheet" href="assets/styles.css?v=16" />
 </head>
 <body data-page="properties">
   <div id="nav-mount"></div>
@@ -80,9 +80,9 @@
   </section>
 
   <div id="footer-mount"></div>
-  <script src="assets/partials.js?v=15"></script>
+  <script src="assets/partials.js?v=16"></script>
   <script type="module">
-    import { loadPropertiesInto } from '/assets/properties.js?v=15';
+    import { loadPropertiesInto } from '/assets/properties.js?v=16';
     const url = new URL(location.href);
     const cat = url.searchParams.get('kategori');
     await loadPropertiesInto('#property-grid', cat ? { category: cat } : {});

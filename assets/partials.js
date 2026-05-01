@@ -8,7 +8,10 @@ const NAV_HTML = (active) => `
   <div class="nav-inner">
     <a href="index.html" class="nav-brand" aria-label="TapuRota — Anasayfa">
       ${LOGO_SVG}
-      <small class="nav-brand-tagline">Doğru Yatırımın Rotası</small>
+      <span class="nav-brand-text">
+        TapuRota
+        <small>Doğru Yatırımın Rotası</small>
+      </span>
     </a>
     <ul class="nav-links">
       <li><a href="index.html" class="${active==='home'?'active':''}">Anasayfa</a></li>
@@ -30,7 +33,10 @@ const NAV_HTML = (active) => `
   <div class="mobile-drawer-head">
     <a href="index.html" class="nav-brand" aria-label="TapuRota">
       ${LOGO_SVG}
-      <small class="nav-brand-tagline">Doğru Yatırımın Rotası</small>
+      <span class="nav-brand-text">
+        TapuRota
+        <small>Doğru Yatırımın Rotası</small>
+      </span>
     </a>
     <button class="mobile-drawer-close" aria-label="Menüyü kapat">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M6 6l12 12M18 6l-12 12"/></svg>
