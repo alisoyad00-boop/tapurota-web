@@ -757,6 +757,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .property-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--radius-lg);
   background: var(--bg-1);
   border: 1px solid var(--border-soft);
@@ -816,6 +818,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .property-body {
   padding: 28px 28px 30px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 .property-loc {
   display: flex;
@@ -837,6 +842,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   margin-bottom: 22px;
 }
 .property-card .h-card { font-weight: 600; }
+.property-card .property-meta { margin-top: auto; }
+.property-card .property-link { align-self: flex-start; }
 .property-meta {
   display: flex;
   gap: 22px;
