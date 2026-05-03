@@ -1,0 +1,15 @@
+# Tapu Rota — robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+
+# Yapay zeka botları için (isteğe bağlı, dilerseniz Disallow yapabilirsiniz)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.tapurota.com/sitemap.xml

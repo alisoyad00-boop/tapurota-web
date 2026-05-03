@@ -3,10 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary (JS ile dinamik güncellenir) -->
   <title>İlan Detayı — Tapu Rota</title>
   <meta name="description" content="Tapu Rota gayrimenkul ilanı detayları." />
+  <meta name="author" content="Tapu Rota" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#1a1208" />
+  <link rel="canonical" href="https://www.tapurota.com/gayrimenkul-detay" id="seo-canonical" />
+
+  <!-- Open Graph (JS ile dinamik güncellenir) -->
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content="Tapu Rota" />
+  <meta property="og:url" content="https://www.tapurota.com/gayrimenkul-detay" id="seo-og-url" />
+  <meta property="og:title" content="İlan Detayı — Tapu Rota" id="seo-og-title" />
+  <meta property="og:description" content="Tapu Rota gayrimenkul ilanı detayları." id="seo-og-desc" />
+  <meta property="og:image" content="https://www.tapurota.com/brand_assets/logo.svg" id="seo-og-image" />
+
+  <!-- Twitter (JS ile dinamik güncellenir) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="İlan Detayı — Tapu Rota" id="seo-tw-title" />
+  <meta name="twitter:description" content="Tapu Rota gayrimenkul ilanı detayları." id="seo-tw-desc" />
+  <meta name="twitter:image" content="https://www.tapurota.com/brand_assets/logo.svg" id="seo-tw-image" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HLZP8N3.jpeg" />
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/styles.css?v=21" />
+
+  <!-- JSON-LD: JS tarafından enjekte edilir -->
+  <script id="seo-jsonld" type="application/ld+json"></script>
 </head>
 <body data-page="properties">
   <div id="nav-mount"></div>
@@ -113,6 +141,8 @@
     if (!detail) {
       titleEl.textContent = 'İlan bulunamadı';
       document.title = 'İlan bulunamadı — Tapu Rota';
+      // SEO: bulunamayan ilan, indexlenmesin
+      document.querySelector('meta[name=robots]').setAttribute('content', 'noindex, follow');
     } else {
       const cover = detail.cover || (detail.images && detail.images[0]) || '';
       const otherImages = (detail.images || []).filter((u) => u !== cover);
@@ -123,6 +153,64 @@
       document.querySelector('meta[name=description]').setAttribute('content', detail.description?.slice(0, 160) || detail.title);
       document.getElementById('d-breadcrumb').textContent = detail.title;
       document.getElementById('d-loc').querySelector('span').textContent = detail.location;
+
+      // SEO: dinamik canonical + Open Graph + Twitter + JSON-LD
+      const seoUrl = `https://www.tapurota.com/gayrimenkul-detay?id=${detail.id}`;
+      const seoTitle = `${detail.title} — Tapu Rota`;
+      const seoDesc = (detail.description?.slice(0, 160) || detail.title);
+      const seoImg = cover || 'https://www.tapurota.com/brand_assets/logo.svg';
+      document.getElementById('seo-canonical').setAttribute('href', seoUrl);
+      document.getElementById('seo-og-url').setAttribute('content', seoUrl);
+      document.getElementById('seo-og-title').setAttribute('content', seoTitle);
+      document.getElementById('seo-og-desc').setAttribute('content', seoDesc);
+      document.getElementById('seo-og-image').setAttribute('content', seoImg);
+      document.getElementById('seo-tw-title').setAttribute('content', seoTitle);
+      document.getElementById('seo-tw-desc').setAttribute('content', seoDesc);
+      document.getElementById('seo-tw-image').setAttribute('content', seoImg);
+
+      const ldImages = [cover, ...otherImages].filter(Boolean);
+      const ld = {
+        "@context": "https://schema.org",
+        "@type": "RealEstateListing",
+        "name": detail.title,
+        "description": detail.description || detail.title,
+        "url": seoUrl,
+        ...(ldImages.length ? { "image": ldImages } : {}),
+        ...(detail.price ? {
+          "offers": {
+            "@type": "Offer",
+            "price": detail.price,
+            "priceCurrency": "TRY",
+            "availability": "https://schema.org/InStock",
+            "url": seoUrl
+          }
+        } : {}),
+        ...(detail.location ? {
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": detail.location,
+            "addressCountry": "TR"
+          }
+        } : {}),
+        ...(detail.area ? {
+          "floorSize": { "@type": "QuantitativeValue", "value": String(detail.area).replace(/[^\d]/g, ''), "unitCode": "MTK" }
+        } : {}),
+        "category": detail.category || "Gayrimenkul",
+        "broker": {
+          "@type": "RealEstateAgent",
+          "name": "Tapu Rota",
+          "url": "https://www.tapurota.com/",
+          "telephone": "+905323307430",
+          "email": "info@tapurota.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Selçuklu",
+            "addressRegion": "Konya",
+            "addressCountry": "TR"
+          }
+        }
+      };
+      document.getElementById('seo-jsonld').textContent = JSON.stringify(ld);
 
       // Tag + listing number
       if (detail.tag) {

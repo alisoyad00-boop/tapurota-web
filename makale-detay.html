@@ -3,10 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary (JS ile dinamik güncellenir) -->
   <title>Yazı — Tapu Rota</title>
   <meta name="description" content="Tapu Rota Yatırım Rehberi yazısı." />
+  <meta name="author" content="Tapu Rota" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#1a1208" />
+  <link rel="canonical" href="https://www.tapurota.com/makale-detay" id="seo-canonical" />
+
+  <!-- Open Graph (JS ile dinamik güncellenir) -->
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content="Tapu Rota" />
+  <meta property="og:url" content="https://www.tapurota.com/makale-detay" id="seo-og-url" />
+  <meta property="og:title" content="Yazı — Tapu Rota" id="seo-og-title" />
+  <meta property="og:description" content="Tapu Rota Yatırım Rehberi yazısı." id="seo-og-desc" />
+  <meta property="og:image" content="https://www.tapurota.com/brand_assets/logo.svg" id="seo-og-image" />
+
+  <!-- Twitter (JS ile dinamik güncellenir) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Yazı — Tapu Rota" id="seo-tw-title" />
+  <meta name="twitter:description" content="Tapu Rota Yatırım Rehberi yazısı." id="seo-tw-desc" />
+  <meta name="twitter:image" content="https://www.tapurota.com/brand_assets/logo.svg" id="seo-tw-image" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HLZP8N3.jpeg" />
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/styles.css?v=21" />
+
+  <!-- JSON-LD: JS tarafından enjekte edilir -->
+  <script id="seo-jsonld" type="application/ld+json"></script>
 </head>
 <body data-page="articles">
   <div id="nav-mount"></div>
@@ -82,12 +110,60 @@
       titleEl.textContent = 'Yazı bulunamadı';
       bodyEl.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">Yazı bulunamadı veya kaldırılmış.</p>';
       document.title = 'Yazı bulunamadı — Tapu Rota';
+      // SEO: bulunamayan yazı, indexlenmesin
+      document.querySelector('meta[name=robots]').setAttribute('content', 'noindex, follow');
     } else {
       // Title + meta
       titleEl.textContent = article.title;
       document.title = `${article.title} — Tapu Rota`;
       document.querySelector('meta[name=description]').setAttribute('content', article.excerpt || article.title);
       document.getElementById('a-breadcrumb').textContent = article.title;
+
+      // SEO: dinamik canonical + Open Graph + Twitter + JSON-LD (Article)
+      const seoUrl = `https://www.tapurota.com/makale-detay?slug=${encodeURIComponent(article.slug || article.id)}`;
+      const seoTitle = `${article.title} — Tapu Rota`;
+      const seoDesc = article.excerpt || article.title;
+      const seoImg = article.cover || 'https://www.tapurota.com/brand_assets/logo.svg';
+      document.getElementById('seo-canonical').setAttribute('href', seoUrl);
+      document.getElementById('seo-og-url').setAttribute('content', seoUrl);
+      document.getElementById('seo-og-title').setAttribute('content', seoTitle);
+      document.getElementById('seo-og-desc').setAttribute('content', seoDesc);
+      document.getElementById('seo-og-image').setAttribute('content', seoImg);
+      document.getElementById('seo-tw-title').setAttribute('content', seoTitle);
+      document.getElementById('seo-tw-desc').setAttribute('content', seoDesc);
+      document.getElementById('seo-tw-image').setAttribute('content', seoImg);
+
+      const ld = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": article.title,
+        "description": seoDesc,
+        "url": seoUrl,
+        ...(article.cover ? { "image": [article.cover] } : {}),
+        ...(article.created_at ? { "datePublished": article.created_at } : {}),
+        ...(article.updated_at ? { "dateModified": article.updated_at } : (article.created_at ? { "dateModified": article.created_at } : {})),
+        "inLanguage": "tr-TR",
+        "author": {
+          "@type": "Organization",
+          "name": "Tapu Rota Uzman Ekibi",
+          "url": "https://www.tapurota.com/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Tapu Rota",
+          "url": "https://www.tapurota.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.tapurota.com/brand_assets/logo.svg"
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": seoUrl
+        },
+        ...(article.category_label || article.category ? { "articleSection": article.category_label || article.category } : {})
+      };
+      document.getElementById('seo-jsonld').textContent = JSON.stringify(ld);
 
       const metaParts = [esc(article.category_label || categoryShort(article.category))];
       if (article.read_minutes) metaParts.push(`${article.read_minutes} dk okuma`);
