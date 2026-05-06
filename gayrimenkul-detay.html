@@ -204,6 +204,7 @@
           "email": "info@tapurota.com",
           "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Kılıçarslan Mah. Denizli Sk. No: 8/F",
             "addressLocality": "Selçuklu",
             "addressRegion": "Konya",
             "addressCountry": "TR"
@@ -220,18 +221,33 @@
       }
       document.getElementById('d-listno').textContent = `İlan No: TR-${String(detail.id).padStart(4, '0')}`;
 
-      // Gallery
+      // Gallery — ana fotoğraf (tam görünür) + altında tüm thumbnail'ler
       const gal = document.getElementById('d-gallery');
-      if (cover || otherImages.length) {
+      const allImages = [cover, ...otherImages].filter(Boolean);
+      if (allImages.length) {
         gal.innerHTML = `
-          <div class="main">
-            ${cover ? `<img src="${esc(cover)}" alt="${esc(detail.title)}" />` : ''}
+          <div class="gallery-main">
+            <img src="${esc(allImages[0])}" alt="${esc(detail.title)}" id="gallery-main-img" />
           </div>
-          ${otherImages.length ? `
-            <div class="stack">
-              ${otherImages.slice(0, 2).map((u) => `<div><img src="${esc(u)}" alt="" /></div>`).join('')}
+          ${allImages.length > 1 ? `
+            <div class="gallery-thumbs">
+              ${allImages.map((u, i) => `
+                <button type="button" class="gallery-thumb${i === 0 ? ' active' : ''}" data-img="${esc(u)}">
+                  <img src="${esc(u)}" alt="" loading="lazy" />
+                </button>
+              `).join('')}
             </div>` : ''}
         `;
+        // Thumbnail tıklama: ana fotoğrafı değiştir
+        gal.querySelectorAll('.gallery-thumb').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const url = btn.getAttribute('data-img');
+            const mainImg = document.getElementById('gallery-main-img');
+            if (mainImg) mainImg.src = url;
+            gal.querySelectorAll('.gallery-thumb').forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+          });
+        });
       } else {
         gal.style.display = 'none';
       }

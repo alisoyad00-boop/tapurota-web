@@ -39,7 +39,10 @@ async function update(req, res, idParam) {
   let body;
   try { body = await readJson(req); } catch { return bad(res, 'Geçersiz istek'); }
 
-  const p = normalizeProperty({ ...existing, ...body, meta: { ...(existing.meta || {}), ...(body.meta || {}) } });
+  // meta: body'de açıkça gönderildiyse onu kullan (silinmiş entries için boş obje gelebilir),
+  // gönderilmediyse mevcut meta korunur. (Eskiden merge yapıyordu — silinen alanlar geri geliyordu.)
+  const finalMeta = body.meta !== undefined ? body.meta : (existing.meta || {});
+  const p = normalizeProperty({ ...existing, ...body, meta: finalMeta });
   const errors = validateProperty(p);
   if (errors.length) return bad(res, errors.join(', '));
 

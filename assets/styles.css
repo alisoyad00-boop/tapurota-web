@@ -1279,29 +1279,58 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
 .detail-gallery {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   margin-bottom: 80px;
 }
-.detail-gallery .main {
-  aspect-ratio: 4/3;
+.detail-gallery .gallery-main {
+  aspect-ratio: 16/10;
   border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow-deep);
+  background: #0a0a0a;
 }
-.detail-gallery .main img { width: 100%; height: 100%; object-fit: cover; }
-.detail-gallery .stack {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+.detail-gallery .gallery-main img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity .3s var(--ease-out);
+}
+.detail-gallery .gallery-thumbs {
+  display: flex;
   gap: 12px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+  scroll-snap-type: x mandatory;
 }
-.detail-gallery .stack > div {
-  border-radius: var(--radius-lg);
+.detail-gallery .gallery-thumb {
+  flex: 0 0 auto;
+  width: 110px;
+  height: 78px;
+  border-radius: 12px;
   overflow: hidden;
-  position: relative;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: #0a0a0a;
+  padding: 0;
+  transition: border-color .3s var(--ease-out), transform .3s var(--ease-out);
+  scroll-snap-align: start;
 }
-.detail-gallery .stack img { width: 100%; height: 100%; object-fit: cover; }
+.detail-gallery .gallery-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.detail-gallery .gallery-thumb:hover { transform: scale(1.04); }
+.detail-gallery .gallery-thumb.active {
+  border-color: var(--gold);
+}
+@media (max-width: 768px) {
+  .detail-gallery .gallery-main { aspect-ratio: 4/3; }
+  .detail-gallery .gallery-thumb { width: 90px; height: 68px; }
+}
 
 .detail-body {
   display: grid;
@@ -1371,6 +1400,28 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   color: var(--text-subtle);
   margin-bottom: 28px;
 }
+/* Rakam okunaklılığı: lining numerals (modern, eşit yükseklik) + tabular spacing (eşit genişlik) */
+.hero-meta-item .num,
+.about-stat .num,
+.detail-side .price,
+.detail-side .price-sub,
+.property-price,
+.detail-spec .v,
+.fee,
+.detail-features li {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* Fiyat ve büyük rakamlar — display font yerine sans-serif (Manrope) ile daha net okunur */
+.hero-meta-item .num,
+.about-stat .num,
+.detail-side .price {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
 .detail-spec {
   display: flex;
   justify-content: space-between;

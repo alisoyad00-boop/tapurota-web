@@ -92,9 +92,9 @@
         </div>
 
         <div class="field full">
-          <label>Fotoğraflar</label>
+          <label>Fotoğraflar <span id="img-counter" style="color:var(--gold,#D4AF6A); font-weight:600; margin-left:8px;">0 / 10</span></label>
           <div class="img-grid" id="img-grid"></div>
-          <span class="hint">İlk fotoğraf otomatik kapak olur. Birden fazla seçebilirsin. Görsel başına max 4 MB.</span>
+          <span class="hint">İlk fotoğraf otomatik kapak olur. En fazla 10 fotoğraf yükleyebilirsin. Görsel başına max 4 MB.</span>
         </div>
 
         <div class="field">
@@ -130,6 +130,7 @@
     }
 
     /* State */
+    const MAX_PHOTOS = 10;
     let images = [];      // [{ url, isCover }]
     let coverIdx = 0;
     let metaItems = [];   // [{ k, v }]
@@ -137,6 +138,8 @@
     /* Image rendering */
     function renderImages() {
       const grid = document.getElementById('img-grid');
+      const counter = document.getElementById('img-counter');
+      if (counter) counter.textContent = `${images.length} / ${MAX_PHOTOS}`;
       const items = images.map((im, i) => `
         <div class="img-card ${i === coverIdx ? 'cover' : ''}" data-idx="${i}">
           <img src="${escapeHtml(im.url)}" alt="" />
@@ -146,7 +149,7 @@
           </div>
         </div>
       `).join('');
-      const adder = `
+      const adder = images.length >= MAX_PHOTOS ? '' : `
         <label class="img-add">
           <span style="font-size:24px;">+</span>
           <span>Fotoğraf ekle</span>
@@ -156,13 +159,18 @@
 
       grid.querySelectorAll('[data-action="cover"]').forEach((b) => b.addEventListener('click', () => { coverIdx = +b.dataset.idx; renderImages(); }));
       grid.querySelectorAll('[data-action="del"]').forEach((b) => b.addEventListener('click', () => removeImage(+b.dataset.idx)));
-      grid.querySelector('#file-input').addEventListener('change', handleFiles);
+      const fileInput = grid.querySelector('#file-input');
+      if (fileInput) fileInput.addEventListener('change', handleFiles);
     }
 
     async function handleFiles(e) {
       const files = Array.from(e.target.files || []);
       if (!files.length) return;
       for (const f of files) {
+        if (images.length >= MAX_PHOTOS) {
+          toast(`En fazla ${MAX_PHOTOS} fotoğraf yükleyebilirsin (kalanı atlandı)`, 'error');
+          break;
+        }
         if (!f.type.startsWith('image/')) { toast(`${f.name}: resim değil, atlandı`, 'error'); continue; }
         if (f.size > 4 * 1024 * 1024) { toast(`${f.name}: 4MB'ı aşıyor, daha küçük bir görsel kullan`, 'error'); continue; }
         const placeholder = { url: URL.createObjectURL(f), uploading: true };
