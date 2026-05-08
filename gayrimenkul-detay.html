@@ -31,7 +31,7 @@
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HLZP8N3.jpeg" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/styles.css?v=21" />
+  <link rel="stylesheet" href="assets/styles.css?v=22" />
 
   <!-- JSON-LD: JS tarafından enjekte edilir -->
   <script id="seo-jsonld" type="application/ld+json"></script>
@@ -132,9 +132,9 @@
   </section>
 
   <div id="footer-mount"></div>
-  <script src="assets/partials.js?v=21"></script>
+  <script src="assets/partials.js?v=22"></script>
   <script type="module">
-    import { loadDetail, esc, fmtPrice, renderCard } from '/assets/properties.js?v=21';
+    import { loadDetail, esc, fmtPrice, renderCard, bindHoverSlideshow } from '/assets/properties.js?v=22';
 
     const titleEl = document.getElementById('d-title');
     const detail = await loadDetail(document.querySelector('.detail-body') || titleEl);
@@ -302,7 +302,9 @@
         const similar = (data.properties || []).filter((p) => p.id !== detail.id).slice(0, 2);
         if (similar.length) {
           document.getElementById('d-similar-section').style.removeProperty('display');
-          document.getElementById('d-similar-grid').innerHTML = similar.map(renderCard).join('');
+          const grid = document.getElementById('d-similar-grid');
+          grid.innerHTML = similar.map(renderCard).join('');
+          bindHoverSlideshow(grid);
         }
       } catch {}
     }

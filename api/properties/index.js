@@ -58,10 +58,10 @@ async function create(req, res) {
 
   const inserted = await sql`
     INSERT INTO properties
-      (slug, category, tag, location, title, description, price, area, meta, images, cover, featured, published)
+      (slug, category, tag, location, title, description, price, area, meta, images, cover, featured, published, status)
     VALUES
       (${slug}, ${p.category}, ${p.tag}, ${p.location}, ${p.title}, ${p.description},
-       ${p.price}, ${p.area}, ${JSON.stringify(p.meta)}::jsonb, ${p.images}, ${p.cover}, ${p.featured}, ${p.published})
+       ${p.price}, ${p.area}, ${JSON.stringify(p.meta)}::jsonb, ${p.images}, ${p.cover}, ${p.featured}, ${p.published}, ${p.status})
     RETURNING *
   `;
   ok(res, { property: publicProperty(inserted[0]) }, 201);

@@ -58,6 +58,16 @@
         </div>
 
         <div class="field">
+          <label for="status">Durum</label>
+          <select id="status">
+            <option value="satisa-hazir">Satışa Hazır</option>
+            <option value="rezerve">Rezerve</option>
+            <option value="satildi">Satıldı</option>
+          </select>
+          <span class="hint">Kart üstünde sol köşede renkli bayrak olarak görünür.</span>
+        </div>
+
+        <div class="field">
           <label for="tag">Etiket</label>
           <input id="tag" type="text" maxlength="60" placeholder="örn. Deniz Manzaralı Arsa" />
           <span class="hint">Kart üstünde sol köşede çıkar.</span>
@@ -239,6 +249,7 @@
         document.getElementById('area').value = property.area || '';
         document.getElementById('featured').checked = !!property.featured;
         document.getElementById('published').checked = !!property.published;
+        document.getElementById('status').value = property.status || 'satisa-hazir';
         images = (property.images || []).map((url) => ({ url }));
         coverIdx = property.cover && images.find((i) => i.url === property.cover)
           ? images.findIndex((i) => i.url === property.cover)
@@ -277,6 +288,7 @@
         area:        document.getElementById('area').value.trim(),
         featured:    document.getElementById('featured').checked,
         published:   document.getElementById('published').checked,
+        status:      document.getElementById('status').value,
         meta,
         images:      images.filter((i) => !i.uploading).map((i) => i.url),
         cover:       images[coverIdx]?.url || null,

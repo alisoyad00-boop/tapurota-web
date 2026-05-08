@@ -60,6 +60,7 @@ async function update(req, res, idParam) {
       cover       = ${p.cover},
       featured    = ${p.featured},
       published   = ${p.published},
+      status      = ${p.status},
       updated_at  = NOW()
     WHERE id = ${existing.id}
     RETURNING *

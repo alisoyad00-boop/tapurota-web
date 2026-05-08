@@ -801,6 +801,70 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   text-transform: uppercase;
   color: var(--gold);
 }
+
+/* Durum bayrağı (Satışa Hazır / Rezerve / Satıldı) */
+.property-status {
+  position: absolute;
+  top: 18px; left: 18px;
+  z-index: 3;
+  padding: 7px 13px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  box-shadow: 0 6px 16px -6px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-variant-numeric: lining-nums;
+}
+.property-status--satisa-hazir { background: linear-gradient(180deg, #2DA84F, #1F7A38); }
+.property-status--rezerve      { background: linear-gradient(180deg, #E89E2C, #B07020); }
+.property-status--satildi      { background: linear-gradient(180deg, #D63A3A, #9B2828); }
+
+/* Eğer hem status hem tag varsa, tag'i status'un altına it */
+.property-card:has(.property-status) .property-tag { top: 56px; }
+
+/* Hover slideshow */
+.property-slides {
+  position: relative;
+  width: 100%; height: 100%;
+}
+.property-slide {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .5s var(--ease-out), transform 1.4s var(--ease-spring), filter .6s var(--ease-out);
+  filter: saturate(.9) brightness(.95);
+}
+.property-slide.is-active { opacity: 1; }
+.property-card:hover .property-slide.is-active { transform: scale(1.06); filter: saturate(1) brightness(1); }
+
+/* Slideshow nokta göstergesi (sadece hover'da görünür) */
+.property-slide-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity .3s var(--ease-out);
+  pointer-events: none;
+}
+.property-card:hover .property-slide-dots { opacity: 1; }
+.property-slide-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  transition: background .3s, transform .3s;
+}
+.property-slide-dot.is-active {
+  background: #fff;
+  transform: scale(1.35);
+}
 .property-price {
   position: absolute;
   top: 18px; right: 18px;

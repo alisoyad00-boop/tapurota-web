@@ -17,15 +17,33 @@ function detailUrl(p) {
   return `gayrimenkul-detay.html?id=${p.id}`;
 }
 
+const STATUS_LABELS = {
+  'satisa-hazir': 'Satışa Hazır',
+  'rezerve': 'Rezerve',
+  'satildi': 'Satıldı',
+};
+
 function renderCard(p) {
   const cover = p.cover || (p.images && p.images[0]) || '';
   const metaEntries = Object.entries(p.meta || {}).slice(0, 3);
+  // Hover slideshow için: kapak + diğer fotoğraflar (kapağı tekrar ekleme)
+  const allImages = [cover, ...((p.images || []).filter((u) => u && u !== cover))].filter(Boolean);
+  const status = p.status || 'satisa-hazir';
+  const statusLabel = STATUS_LABELS[status] || 'Satışa Hazır';
   return `
-    <article class="property-card" data-filter-item="${esc(p.category)}">
+    <article class="property-card" data-filter-item="${esc(p.category)}" data-status="${esc(status)}">
       <div class="property-media">
-        ${cover ? `<img src="${esc(cover)}" alt="${esc(p.title)}" />` : `<div style="background:#161310;width:100%;aspect-ratio:9/6.2"></div>`}
+        ${allImages.length ? `
+          <div class="property-slides">
+            ${allImages.map((u, i) => `<img src="${esc(u)}" alt="${i === 0 ? esc(p.title) : ''}" class="property-slide${i === 0 ? ' is-active' : ''}" loading="lazy" />`).join('')}
+          </div>` : `<div style="background:#161310;width:100%;aspect-ratio:9/6.2"></div>`}
+        <span class="property-status property-status--${esc(status)}">${esc(statusLabel)}</span>
         ${p.tag ? `<span class="property-tag">${esc(p.tag)}</span>` : ''}
         ${p.price ? `<span class="property-price">${esc(fmtPrice(p.price))}</span>` : ''}
+        ${allImages.length > 1 ? `
+          <div class="property-slide-dots" aria-hidden="true">
+            ${allImages.map((_, i) => `<span class="property-slide-dot${i === 0 ? ' is-active' : ''}"></span>`).join('')}
+          </div>` : ''}
       </div>
       <div class="property-body">
         <div class="property-loc">${PIN}${esc(p.location)}</div>
@@ -41,6 +59,35 @@ function renderCard(p) {
         <a href="${detailUrl(p)}" class="property-link">Detayları İncele${ARROW}</a>
       </div>
     </article>`;
+}
+
+/* Hover slideshow: kart üstüne gelince fotoğraflar sırayla geçer.
+   Touch cihazlarda mouseenter tetiklenmez — ilk fotoğraf kalır (doğru davranış). */
+function bindHoverSlideshow(rootEl) {
+  if (!rootEl) return;
+  const cards = rootEl.querySelectorAll('.property-card');
+  cards.forEach((card) => {
+    const slides = card.querySelectorAll('.property-slide');
+    const dots = card.querySelectorAll('.property-slide-dot');
+    if (slides.length < 2) return;
+    let idx = 0;
+    let timer = null;
+    const setActive = (n) => {
+      slides[idx].classList.remove('is-active');
+      if (dots[idx]) dots[idx].classList.remove('is-active');
+      idx = (n + slides.length) % slides.length;
+      slides[idx].classList.add('is-active');
+      if (dots[idx]) dots[idx].classList.add('is-active');
+    };
+    card.addEventListener('mouseenter', () => {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => setActive(idx + 1), 1300);
+    });
+    card.addEventListener('mouseleave', () => {
+      if (timer) { clearInterval(timer); timer = null; }
+      setActive(0); // başa dön
+    });
+  });
 }
 
 function emptyState(msg) {
@@ -70,6 +117,9 @@ export async function loadPropertiesInto(selector, opts = {}) {
       return;
     }
     el.innerHTML = list.map(renderCard).join('');
+
+    // Hover slideshow'u bağla
+    bindHoverSlideshow(el);
 
     // Filter count update (gayrimenkuller sayfasındaki sayaç)
     const countEl = document.querySelector('[data-filter-count]');
@@ -103,4 +153,4 @@ export async function loadDetail(target) {
   }
 }
 
-export { esc, fmtPrice, detailUrl, PIN, ARROW, CHECK, renderCard };
+export { esc, fmtPrice, detailUrl, PIN, ARROW, CHECK, renderCard, bindHoverSlideshow };

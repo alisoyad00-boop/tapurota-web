@@ -17,10 +17,15 @@ await sql`
     cover         TEXT,
     featured      BOOLEAN DEFAULT FALSE,
     published     BOOLEAN DEFAULT TRUE,
+    status        TEXT DEFAULT 'satisa-hazir',
     created_at    TIMESTAMPTZ DEFAULT NOW(),
     updated_at    TIMESTAMPTZ DEFAULT NOW()
   )
 `;
+
+/* Migration: mevcut tablolara status kolonunu sonradan ekle (idempotent) */
+await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'satisa-hazir'`;
+await sql`UPDATE properties SET status = 'satisa-hazir' WHERE status IS NULL`;
 
 await sql`
   CREATE TABLE IF NOT EXISTS admin_users (
