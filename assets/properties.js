@@ -30,6 +30,9 @@ function renderCard(p) {
   const allImages = [cover, ...((p.images || []).filter((u) => u && u !== cover))].filter(Boolean);
   const status = p.status || 'satisa-hazir';
   const statusLabel = STATUS_LABELS[status] || 'Satışa Hazır';
+  // "Satışa Hazır" varsayılan durum — pill göstermeye gerek yok (görsel kalabalık).
+  // Sadece "Rezerve" veya "Satıldı" durumlarında pill çıkar.
+  const showStatus = status !== 'satisa-hazir';
   return `
     <article class="property-card" data-filter-item="${esc(p.category)}" data-status="${esc(status)}">
       <div class="property-media">
@@ -37,7 +40,7 @@ function renderCard(p) {
           <div class="property-slides">
             ${allImages.map((u, i) => `<img src="${esc(u)}" alt="${i === 0 ? esc(p.title) : ''}" class="property-slide${i === 0 ? ' is-active' : ''}" loading="lazy" />`).join('')}
           </div>` : `<div style="background:#161310;width:100%;aspect-ratio:9/6.2"></div>`}
-        <span class="property-status property-status--${esc(status)}">${esc(statusLabel)}</span>
+        ${showStatus ? `<span class="property-status property-status--${esc(status)}">${esc(statusLabel)}</span>` : ''}
         ${p.tag ? `<span class="property-tag">${esc(p.tag)}</span>` : ''}
         ${p.price ? `<span class="property-price">${esc(fmtPrice(p.price))}</span>` : ''}
         ${allImages.length > 1 ? `
