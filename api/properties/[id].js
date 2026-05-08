@@ -1,9 +1,10 @@
 import { sql } from '../../lib/db.mjs';
 import { requireAdmin } from '../../lib/auth.mjs';
 import { readJson, ok, bad } from '../../lib/json.mjs';
-import { normalizeProperty, validateProperty, publicProperty } from '../../lib/properties.mjs';
+import { normalizeProperty, validateProperty, publicProperty, ensurePropertyMigrations } from '../../lib/properties.mjs';
 
 export default async function handler(req, res) {
+  await ensurePropertyMigrations();
   const idParam = req.query.id || (new URL(req.url, `http://${req.headers.host}`).pathname.split('/').pop());
   if (req.method === 'GET') return read(req, res, idParam);
   if (req.method === 'PUT') return update(req, res, idParam);

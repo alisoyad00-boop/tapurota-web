@@ -71,6 +71,10 @@ export default async function handler(req, res) {
   await sql`CREATE INDEX IF NOT EXISTS idx_properties_published ON properties (published)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_properties_featured ON properties (featured) WHERE featured = TRUE`;
   await sql`CREATE INDEX IF NOT EXISTS idx_properties_category ON properties (category)`;
+
+  // Migration: status kolonu (Satışa Hazır / Rezerve / Satıldı)
+  await sql`ALTER TABLE properties ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'satisa-hazir'`;
+  await sql`UPDATE properties SET status = 'satisa-hazir' WHERE status IS NULL`;
   await sql`CREATE INDEX IF NOT EXISTS idx_articles_published ON articles (published)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_articles_featured ON articles (featured) WHERE featured = TRUE`;
   await sql`CREATE INDEX IF NOT EXISTS idx_articles_category ON articles (category)`;

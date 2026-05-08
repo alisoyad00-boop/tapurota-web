@@ -1,9 +1,10 @@
 import { sql } from '../../lib/db.mjs';
 import { requireAdmin } from '../../lib/auth.mjs';
 import { readJson, ok, bad } from '../../lib/json.mjs';
-import { normalizeProperty, validateProperty, slugify, publicProperty } from '../../lib/properties.mjs';
+import { normalizeProperty, validateProperty, slugify, publicProperty, ensurePropertyMigrations } from '../../lib/properties.mjs';
 
 export default async function handler(req, res) {
+  await ensurePropertyMigrations();
   if (req.method === 'GET') return list(req, res);
   if (req.method === 'POST') return create(req, res);
   return bad(res, 'Method not allowed', 405);
