@@ -1625,6 +1625,56 @@ h1, h2, h3, h4, h5, h6,
 .wa-cta-num a:hover {
   color: var(--gold-bright);
 }
+
+/* Her numara için ayrı kart: numara + WhatsApp + Ara butonları */
+.wa-num-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.wa-num-item {
+  background: rgba(168, 122, 46, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .3s var(--ease-out), background .3s var(--ease-out);
+}
+.wa-num-item:hover {
+  border-color: var(--border-strong);
+  background: rgba(168, 122, 46, 0.10);
+}
+.wa-num-value {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--gold);
+  font-variant-numeric: lining-nums tabular-nums;
+  text-align: center;
+}
+.wa-num-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.wa-num-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 11px 14px !important;
+  font-size: 13px !important;
+  letter-spacing: 0.08em;
+  gap: 8px;
+}
+.wa-num-btn svg {
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .wa-num-actions { grid-template-columns: 1fr; }
+}
 .wa-cta-desc {
   font-size: 14.5px;
   line-height: 1.7;

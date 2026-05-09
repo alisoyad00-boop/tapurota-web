@@ -33,7 +33,7 @@
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HLZP8N3.jpeg" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/styles.css?v=27" />
+  <link rel="stylesheet" href="assets/styles.css?v=28" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -113,9 +113,9 @@
   </section>
 
   <div id="footer-mount"></div>
-  <script src="assets/partials.js?v=27"></script>
+  <script src="assets/partials.js?v=28"></script>
   <script type="module">
-    import { loadPropertiesInto } from '/assets/properties.js?v=27';
+    import { loadPropertiesInto } from '/assets/properties.js?v=28';
     const url = new URL(location.href);
     const cat = url.searchParams.get('kategori');
     await loadPropertiesInto('#property-grid', cat ? { category: cat } : {});
