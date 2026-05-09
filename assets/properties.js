@@ -25,7 +25,6 @@ const STATUS_LABELS = {
 
 function renderCard(p) {
   const cover = p.cover || (p.images && p.images[0]) || '';
-  const metaEntries = Object.entries(p.meta || {}).slice(0, 3);
   // Hover slideshow için: kapak + diğer fotoğraflar (kapağı tekrar ekleme)
   const allImages = [cover, ...((p.images || []).filter((u) => u && u !== cover))].filter(Boolean);
   const status = p.status || 'satisa-hazir';
@@ -49,13 +48,6 @@ function renderCard(p) {
         <div class="property-loc">${PIN}${esc(p.location)}</div>
         <h3 class="h-card">${esc(p.title)}</h3>
         ${p.description ? `<p>${esc(p.description)}</p>` : ''}
-        ${metaEntries.length ? `<div class="property-meta">${
-          metaEntries.map(([k, v]) => `
-            <div class="property-meta-item">
-              <span class="key">${esc(k)}</span>
-              <span class="val">${esc(v)}</span>
-            </div>`).join('')
-        }</div>` : ''}
         <a href="${detailUrl(p)}" class="property-link">Detayları İncele${ARROW}</a>
       </div>
     </article>`;

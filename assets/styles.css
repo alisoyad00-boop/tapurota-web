@@ -119,6 +119,18 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .font-display { font-family: var(--font-display); }
 .font-body    { font-family: var(--font-body); }
 
+/* Tüm başlıklar ve display font'lar için MODERN rakamlar (lining-nums).
+   Cormorant Garamond varsayılan olarak old-style numerals kullanır
+   (bazı rakamlar baseline'ın altına sarkar). Bu, "7 DÖNÜM" gibi
+   başlıklarda 7'nin yazıdan aşağı düşmüş gibi görünmesine sebep olur.
+   lining-nums + tabular-nums ile rakamlar yazıyla aynı yükseklikte hizalanır. */
+h1, h2, h3, h4, h5, h6,
+.h-display, .h-section, .h-card,
+.detail-title, [class^="h-"] {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
 .eyebrow {
   font-family: var(--font-body);
   font-size: 11px;
