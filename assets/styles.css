@@ -822,9 +822,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .property-status--rezerve      { background: linear-gradient(180deg, #E89E2C, #B07020); }
 .property-status--satildi      { background: linear-gradient(180deg, #D63A3A, #9B2828); }
 
-/* DOM'da status, tag'den önce render ediliyor — sibling selector ile tag'i it.
-   :has() yerine ~ kullanmak daha geniş browser desteği sağlar. */
-.property-status ~ .property-tag { top: 60px; }
+/* DOM'da artık tag önce, sonra status. Tag varsa status'u onun ALTINA it. */
+.property-tag ~ .property-status { top: 60px; }
 
 /* Hover slideshow */
 .property-slides {

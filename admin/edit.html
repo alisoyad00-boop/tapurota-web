@@ -78,6 +78,17 @@
           <input id="location" type="text" required maxlength="120" placeholder="örn. Yalova · Çınarcık" />
         </div>
 
+        <div class="field">
+          <label for="ada">Ada</label>
+          <input id="ada" type="text" maxlength="20" placeholder="örn. 101" />
+          <span class="hint">Tapu bilgisi — kart üstünde detay olarak çıkar.</span>
+        </div>
+
+        <div class="field">
+          <label for="parsel">Parsel</label>
+          <input id="parsel" type="text" maxlength="20" placeholder="örn. 140" />
+        </div>
+
         <div class="field full">
           <label for="description">Açıklama</label>
           <textarea id="description" maxlength="2000" placeholder="İlanın detaylı açıklaması..."></textarea>
@@ -250,11 +261,17 @@
         document.getElementById('featured').checked = !!property.featured;
         document.getElementById('published').checked = !!property.published;
         document.getElementById('status').value = property.status || 'satisa-hazir';
+        // Ada/Parsel meta'dan çek, ayrı UI input'larına yansıt
+        const metaCopy = { ...(property.meta || {}) };
+        document.getElementById('ada').value = metaCopy['Ada'] || '';
+        document.getElementById('parsel').value = metaCopy['Parsel'] || '';
+        delete metaCopy['Ada'];
+        delete metaCopy['Parsel'];
         images = (property.images || []).map((url) => ({ url }));
         coverIdx = property.cover && images.find((i) => i.url === property.cover)
           ? images.findIndex((i) => i.url === property.cover)
           : 0;
-        metaItems = Object.entries(property.meta || {}).map(([k, v]) => ({ k, v: String(v) }));
+        metaItems = Object.entries(metaCopy).map(([k, v]) => ({ k, v: String(v) }));
         renderImages();
         renderMeta();
       } catch (err) {
@@ -277,6 +294,11 @@
         const v = (m.v || '').trim();
         if (k && v) meta[k] = v;
       }
+      // Ada/Parsel ayrı input'lardan meta'ya enjekte et
+      const adaVal = document.getElementById('ada').value.trim();
+      const parselVal = document.getElementById('parsel').value.trim();
+      if (adaVal) meta['Ada'] = adaVal;
+      if (parselVal) meta['Parsel'] = parselVal;
 
       const payload = {
         title:       document.getElementById('title').value.trim(),
